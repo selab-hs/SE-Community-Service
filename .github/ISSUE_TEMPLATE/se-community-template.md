@@ -1,7 +1,6 @@
 ---
 
 name: se community issue template
-about: se community issue template
 title: ''
 labels: ''
 assignees: ''
