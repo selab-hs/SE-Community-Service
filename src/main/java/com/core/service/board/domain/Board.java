@@ -1,5 +1,6 @@
 package com.core.service.board.domain;
 
+import com.core.service.board.dto.request.UpdateBoardRequest;
 import com.core.service.common.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -24,11 +25,20 @@ public class Board extends BaseEntity {
     @Column(name = "board_id")
     private Long id;
 
+    @Column(nullable = false)
     private String memberId;
 
+    @Column(nullable = false)
     private String title;
 
+    @Column(nullable = false)
     private String content;
 
+    @Column(columnDefinition = "long default 0", nullable = false)
     private Long viewCount;
+
+    public void update(UpdateBoardRequest request){
+        this.title = request.getTitle();
+        this.content = request.getContent();
+    }
 }
