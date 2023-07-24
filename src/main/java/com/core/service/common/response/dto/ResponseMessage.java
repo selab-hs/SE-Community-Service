@@ -21,7 +21,6 @@ public enum ResponseMessage {
     private final static String NOT_FOUND_MESSAGE = "NOT FOUND";
 
 
-
     private final HttpStatus status;
     private final String message;
 
