@@ -7,8 +7,11 @@ import com.core.service.board.dto.request.CreateBoardRequest;
 import com.core.service.board.dto.request.UpdateBoardRequest;
 import com.core.service.common.response.dto.ResponseDto;
 import com.core.service.common.response.dto.ResponseMessage;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +30,10 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public ResponseEntity<ResponseDto> getAllBoards(){
-        List<ReadAllBoardResponse> boards = boardService.getAll();
+    public ResponseEntity<ResponseDto> getAllBoards(
+        @PageableDefault(sort ="id", size = 15,direction= Direction.ASC)
+        Pageable pageable){
+        Page<ReadAllBoardResponse> boards = boardService.getAll(pageable);
 
         return ResponseDto.toResponseEntity(ResponseMessage.READ_SUCCESS_ALL_BOARD, boards);
     }
