@@ -7,8 +7,10 @@ import com.core.service.board.dto.Response.ReadBoardResponse;
 import com.core.service.board.dto.request.CreateBoardRequest;
 import com.core.service.board.dto.request.UpdateBoardRequest;
 import com.core.service.board.infrastructure.BoardRepository;
-import java.util.List;
+import com.core.service.error.exception.board.NonExistentBoardException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,7 +31,7 @@ public class BoardService {
     @Transactional
     public void update(Long boardId, UpdateBoardRequest request) {
         Board board = boardRepository.findById(boardId).orElseThrow(
-            () -> new NullPointerException("해당 보드가 존재하지 않습니다.")
+            () -> new NonExistentBoardException("해당 보드가 존재하지 않습니다.")
         );
         board.update(request);
         boardRepository.save(board);
@@ -38,14 +40,14 @@ public class BoardService {
     @Transactional(readOnly = true)
     public ReadBoardResponse get(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(
-            () -> new NullPointerException("해당 보드가 존재하지 않습니다.")
+            () -> new NonExistentBoardException("해당 보드가 존재하지 않습니다.")
         );
         return converter.convertToReadBoardResponse(board);
     }
 
     @Transactional(readOnly = true)
-    public List<ReadAllBoardResponse> getAll() {
-        return converter.convertToReadAllBoardResponse(boardRepository.findAll());
+    public Page<ReadAllBoardResponse> getAll(Pageable pageable) {
+        return converter.convertToReadAllBoardResponse(boardRepository.findAll(pageable));
     }
 
     @Transactional

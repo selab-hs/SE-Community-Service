@@ -4,8 +4,7 @@ import com.core.service.board.domain.Board;
 import com.core.service.board.dto.Response.ReadAllBoardResponse;
 import com.core.service.board.dto.Response.ReadBoardResponse;
 import com.core.service.board.dto.request.CreateBoardRequest;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,19 +28,14 @@ public class BoardConverter {
             .build();
     }
 
-    public List<ReadAllBoardResponse> convertToReadAllBoardResponse(List<Board> boards){
-        List<ReadAllBoardResponse> boardsResponse = new ArrayList<>();
-
-        for(Board board : boards){
-            ReadAllBoardResponse.builder()
+    public Page<ReadAllBoardResponse> convertToReadAllBoardResponse(Page<Board> boards){
+        return boards.map(
+            board -> ReadAllBoardResponse.builder()
                 .id(board.getId())
                 .memberId(board.getMemberId())
                 .title(board.getTitle())
                 .content(board.getContent())
                 .view(board.getViewCount())
-                .build();
-        }
-
-        return boardsResponse;
+                .build());
     }
 }
