@@ -1,5 +1,6 @@
 package com.core.service.comment.domain;
 
+import com.core.service.comment.dto.request.UpdateCommentRequest;
 import com.core.service.common.domain.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,4 +28,8 @@ public class Comment extends BaseEntity {
     private Long boardId;
 
     private String comment;
+
+    public void update(UpdateCommentRequest updateCommentRequest){
+        this.comment = updateCommentRequest.getComment();
+    }
 }
