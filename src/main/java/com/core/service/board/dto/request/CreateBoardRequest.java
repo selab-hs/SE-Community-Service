@@ -3,7 +3,6 @@ package com.core.service.board.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
 @Getter
 public class CreateBoardRequest {
     private Long id;
