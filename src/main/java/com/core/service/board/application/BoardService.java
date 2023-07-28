@@ -54,4 +54,14 @@ public class BoardService {
     public void delete(Long id) {
         boardRepository.deleteById(id);
     }
+
+    @Transactional
+    public Long plusView(Long id){
+        Board board = boardRepository.findById(id).orElseThrow(
+            () -> new NonExistentBoardException("해당 보드가 존재하지 않습니다."));
+        board.updateView();
+        boardRepository.save(board);
+
+        return board.getViewCount();
+    }
 }

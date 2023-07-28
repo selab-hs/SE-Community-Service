@@ -41,4 +41,8 @@ public class Board extends BaseEntity {
         this.title = request.getTitle();
         this.content = request.getContent();
     }
+
+    public void updateView(){
+        this.viewCount++;
+    }
 }
