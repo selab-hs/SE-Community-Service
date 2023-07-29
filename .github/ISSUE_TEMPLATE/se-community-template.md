@@ -1,6 +1,6 @@
 ---
 
-name: se community issue template
+name: se community issue template v1
 title: ''
 labels: ''
 assignees: ''
