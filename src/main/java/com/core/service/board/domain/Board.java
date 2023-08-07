@@ -1,5 +1,6 @@
 package com.core.service.board.domain;
 
+import com.core.service.board.dto.request.UpdateBoardRequest;
 import com.core.service.common.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
