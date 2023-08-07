@@ -1,5 +1,7 @@
 package com.core.service.board.application;
 
+import static com.core.service.error.dto.ErrorMessage.NON_EXISTENT_BOARD_EXCEPTION;
+
 import com.core.service.board.domain.Board;
 import com.core.service.board.domain.converter.BoardConverter;
 import com.core.service.board.dto.Response.ReadAllBoardResponse;
@@ -31,7 +33,7 @@ public class BoardService {
     @Transactional
     public void update(Long boardId, UpdateBoardRequest request) {
         Board board = boardRepository.findById(boardId).orElseThrow(
-            () -> new NonExistentBoardException("해당 보드가 존재하지 않습니다.")
+            () -> new NonExistentBoardException(NON_EXISTENT_BOARD_EXCEPTION,"업데이트 단일 게시판 조회 실패")
         );
         board.update(request);
         boardRepository.save(board);
@@ -40,7 +42,7 @@ public class BoardService {
     @Transactional(readOnly = true)
     public ReadBoardResponse get(Long boardId) {
         Board board = boardRepository.findById(boardId).orElseThrow(
-            () -> new NonExistentBoardException("해당 보드가 존재하지 않습니다.")
+            () -> new NonExistentBoardException(NON_EXISTENT_BOARD_EXCEPTION,"단일 게시판 조회 실패")
         );
         return converter.convertToReadBoardResponse(board);
     }
@@ -58,7 +60,7 @@ public class BoardService {
     @Transactional
     public Long plusView(Long id){
         Board board = boardRepository.findById(id).orElseThrow(
-            () -> new NonExistentBoardException("해당 보드가 존재하지 않습니다."));
+            () -> new NonExistentBoardException(NON_EXISTENT_BOARD_EXCEPTION, "게시글 조회 단일 게시판 조회 실패"));
         board.updateView();
         boardRepository.save(board);
 
