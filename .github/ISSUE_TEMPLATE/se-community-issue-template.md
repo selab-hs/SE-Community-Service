@@ -1,6 +1,6 @@
 ---
-
 name: se community issue template
+about: Create a report to help us improve
 title: ''
 labels: ''
 assignees: ''
@@ -25,4 +25,4 @@ assignees: ''
 
 ### 📋 이슈 혹은 고려할 점
 <!-- 발생한 이슈 혹은 고려할 부분을 작성해주세요. -->
-
+>
