@@ -6,6 +6,7 @@ import com.core.service.comment.dto.request.CreateCommentRequest;
 import com.core.service.comment.dto.request.UpdateCommentRequest;
 import com.core.service.comment.dto.response.ReadCommentResponse;
 import com.core.service.comment.infrastructure.CommentRepository;
+
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,11 @@ public class CommentService {
     private final CommentConverter converter;
 
     @Transactional
-    public void create(CreateCommentRequest request){
-        commentRepository.save(
-            converter.convertToEntity(request)
-        );
+    public Comment create(CreateCommentRequest request){
+        Comment comment =  converter.convertToEntity(request);
+        commentRepository.save(comment);
+
+        return comment;
     }
 
     @Transactional
@@ -34,9 +36,9 @@ public class CommentService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReadCommentResponse> getAll(Long boardId){
+    public List<ReadCommentResponse> getAll(List<Long> commentIds){
         return converter.convertToReadCommentResponse(
-            commentRepository.findByBoardId(boardId)
+            commentRepository.findByIdIn(commentIds)
         );
     }
 

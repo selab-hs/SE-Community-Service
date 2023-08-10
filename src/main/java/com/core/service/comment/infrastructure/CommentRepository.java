@@ -7,7 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Optional<Comment> findByIdAndBoardId(Long id, Long boardId);
-    List<Comment> findByBoardId(Long boardId);
+
+    List<Comment> findByIdIn(List<Long> ids);
 
     void deleteByIdAndBoardId(Long commentId, Long boardId);
 }
