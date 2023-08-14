@@ -17,10 +17,10 @@ public class Member extends BaseEntity {
     private Long id;
 
     @Column
-    private String memberEmail;
+    private String email;
 
     @Column
-    private String memberPassword;
+    private String password;
 
     @Column
     private String name;
@@ -38,8 +38,8 @@ public class Member extends BaseEntity {
     @Builder
     public Member(String memberEmail, String memberPassword, String name,
                   String grade, String classNumber){
-        this.memberEmail = memberEmail;
-        this.memberPassword = memberPassword;
+        this.email = memberEmail;
+        this.password = memberPassword;
         this.name = name;
         this.grade = grade;
         this.classNumber = classNumber;
@@ -49,7 +49,7 @@ public class Member extends BaseEntity {
     public MemberResponse toResponseDto(){
         return MemberResponse.builder()
                 .id(id)
-                .email(memberEmail)
+                .email(email)
                 .name(name)
                 .grade(grade)
                 .classNumber(classNumber)
