@@ -26,7 +26,7 @@ public class MemberService {
 
     @Transactional
     public MemberResponse joinMember(CreateMemberRequest request) {
-        duplicateValidationMemberEmail(request.getMemberEmail());
+        duplicateValidationMemberEmail(request.getEmail());
         var response = memberRepository.save(request.toEntity());
 
         return response.toResponseDto();
