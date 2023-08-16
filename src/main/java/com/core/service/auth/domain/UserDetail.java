@@ -10,7 +10,7 @@ public class UserDetail {
     private String userEmail;
     private String userPassword;
     private String name;
-    private String grade;
+    private Long grade;
     private String classNumber;
     private RoleType roleType;
 
