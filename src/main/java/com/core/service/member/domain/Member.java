@@ -1,7 +1,7 @@
 package com.core.service.member.domain;
 
 import com.core.service.common.domain.BaseEntity;
-import com.core.service.member.domain.vo.RoleType;
+import com.core.service.member.domain.vo.*;
 import com.core.service.member.dto.response.MemberResponse;
 import lombok.*;
 
@@ -26,7 +26,7 @@ public class Member extends BaseEntity {
     private String name;
 
     @Column
-    private String grade;
+    private Long grade;
 
     @Column
     private String classNumber;
@@ -36,13 +36,13 @@ public class Member extends BaseEntity {
     private RoleType roleType;
 
     @Builder
-    public Member(String memberEmail, String memberPassword, String name,
-                  String grade, String classNumber){
-        this.email = memberEmail;
-        this.password = memberPassword;
-        this.name = name;
+    public Member(String email, String password, String name,
+                  Long grade, String classNumber){
+        this.email = new Email(email).getEmail();
+        this.password = new Password(password).getPassword();
+        this.name = new Name(name).getName();
         this.grade = grade;
-        this.classNumber = classNumber;
+        this.classNumber = new ClassNumber(classNumber).getClassNumber();
         this.roleType = RoleType.LAB_USER;
     }
 
