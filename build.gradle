@@ -32,6 +32,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+    // password Encryption
+    implementation 'org.springframework.security:spring-security-crypto'
+
     // jwt
     implementation('io.jsonwebtoken:jjwt-api:0.11.5')
     implementation('io.jsonwebtoken:jjwt-impl:0.11.5')
