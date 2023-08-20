@@ -26,12 +26,11 @@ public class MemberService {
 
     @Transactional
     public MemberResponse joinMember(CreateMemberRequest request) {
-        duplicateValidationMemberEmail(request.getMemberEmail());
+        duplicateValidationMemberEmail(request.getEmail());
         var response = memberRepository.save(request.toEntity());
 
         return response.toResponseDto();
     }
-
 
     public List<MemberResponse> searchAllMember() {
         var response = memberRepository.findAll().stream()
@@ -42,7 +41,7 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public void duplicateValidationMemberEmail(String email){
-        memberRepository.findByMemberEmail(email)
+        memberRepository.findByEmail(email)
                 .ifPresent(member -> {
                     throw new AlreadyExistMemberEmailException(ErrorMessage.ALREADY_EXIST_MEMBER_EMAIL_EXCEPTION, "이미 존재하는 이메일 정보입니다");
                 });
