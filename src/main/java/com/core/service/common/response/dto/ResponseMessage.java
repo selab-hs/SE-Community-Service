@@ -13,6 +13,7 @@ public enum ResponseMessage {
     CREATE_SUCCESS_MEMBER(HttpStatus.CREATED, "멤버 회원 가입 성공"),
     SUCCESS_LOAD_MEMBER_INFORMATION(HttpStatus.OK, "회원 정보 조회 성공"),
     SUCCESS_SEARCH_ALL_MEMBER(HttpStatus.OK, "모든 회원 조회 성공"),
+    SUCCESS_UPDATE_MEMBER(HttpStatus.OK, "회원 정보 변경 성공"),
 
     // 게시판 성공 message
     CREATE_SUCCESS_BOARD(HttpStatus.CREATED,"Board를 생성 했습니다."),
