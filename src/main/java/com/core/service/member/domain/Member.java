@@ -2,6 +2,7 @@ package com.core.service.member.domain;
 
 import com.core.service.common.domain.BaseEntity;
 import com.core.service.member.domain.vo.*;
+import com.core.service.member.dto.request.UpdateMemberRequest;
 import com.core.service.member.dto.response.MemberResponse;
 import lombok.*;
 
@@ -55,5 +56,20 @@ public class Member extends BaseEntity {
                 .classNumber(classNumber)
                 .roleType(roleType)
                 .build();
+    }
+
+    public void encodePassword(String encodePassword) {
+        this.password = encodePassword;
+    }
+
+    public void updateMember(UpdateMemberRequest request) {
+        this.email = request.getEmail();
+        this.password = request.getPassword();
+        this.name = request.getName();
+        this.grade = request.getGrade();
+    }
+
+    public void updateRoleType(RoleType roleType) {
+        this.roleType = roleType;
     }
 }
