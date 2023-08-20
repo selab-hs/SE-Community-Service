@@ -11,13 +11,13 @@ public class MemberResponse {
     private Long id;
     private String email;
     private String name;
-    private String grade;
+    private Long grade;
     private String classNumber;
     private RoleType roleType;
 
     @Builder
     public MemberResponse(Long id, String email, String name,
-                          String grade, String classNumber, RoleType roleType){
+                          Long grade, String classNumber, RoleType roleType){
         this.id = id;
         this.email = email;
         this.name = name;
