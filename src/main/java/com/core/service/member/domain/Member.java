@@ -9,8 +9,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 public class Member extends BaseEntity {
 
     @Id
@@ -18,19 +18,23 @@ public class Member extends BaseEntity {
     private Long id;
 
     @Column
-    private String email;
+    @Embedded
+    private Email email;
 
     @Column
-    private String password;
+    @Embedded
+    private Password password;
 
     @Column
-    private String name;
+    @Embedded
+    private Name name;
 
     @Column
     private Long grade;
 
     @Column
-    private String classNumber;
+    @Embedded
+    private ClassNumber classNumber;
 
     @Column
     @Enumerated
@@ -39,33 +43,33 @@ public class Member extends BaseEntity {
     @Builder
     public Member(String email, String password, String name,
                   Long grade, String classNumber){
-        this.email = new Email(email).getEmail();
-        this.password = new Password(password).getPassword();
-        this.name = new Name(name).getName();
+        this.email = new Email(email);
+        this.password = new Password(password);
+        this.name = new Name(name);
         this.grade = grade;
-        this.classNumber = new ClassNumber(classNumber).getClassNumber();
+        this.classNumber = new ClassNumber(classNumber);
         this.roleType = RoleType.LAB_USER;
     }
 
     public MemberResponse toResponseDto(){
         return MemberResponse.builder()
                 .id(id)
-                .email(email)
-                .name(name)
+                .email(email.getEmail())
+                .name(name.getName())
                 .grade(grade)
-                .classNumber(classNumber)
+                .classNumber(classNumber.getClassNumber())
                 .roleType(roleType)
                 .build();
     }
 
     public void encodePassword(String encodePassword) {
-        this.password = encodePassword;
+        this.password.setEncodePassword(encodePassword);
     }
 
     public void updateMember(UpdateMemberRequest request) {
-        this.email = request.getEmail();
-        this.password = request.getPassword();
-        this.name = request.getName();
+        this.email = new Email(request.getEmail());
+        this.password = new Password(request.getPassword());
+        this.name = new Name(request.getName());
         this.grade = request.getGrade();
     }
 
