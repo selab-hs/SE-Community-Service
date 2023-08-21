@@ -4,15 +4,20 @@ import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.member.InvalidEmailException;
 import lombok.Getter;
 
+import javax.persistence.Embeddable;
 import java.util.regex.Pattern;
 
 @Getter
+@Embeddable
 public class Name {
     private static final String NAME_REGEX = "^[ㄱ-ㅎ가-힣]{1,5}$";
     private String name;
 
     public Name(String name) {
         validateEmail(name);
+    }
+
+    protected Name() {
     }
 
     private void validateEmail(String name) {

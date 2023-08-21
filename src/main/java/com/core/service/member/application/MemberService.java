@@ -5,6 +5,7 @@ import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.member.AlreadyExistMemberEmailException;
 import com.core.service.error.exception.member.InvalidLoginInfoException;
 import com.core.service.member.domain.Member;
+import com.core.service.member.domain.vo.Email;
 import com.core.service.member.dto.request.CreateMemberRequest;
 import com.core.service.member.dto.request.UpdateMemberRequest;
 import com.core.service.member.dto.response.MemberResponse;
@@ -52,7 +53,7 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public void duplicateValidationMemberEmail(String email){
-        memberRepository.findByEmail(email)
+        memberRepository.findByEmail(new Email(email))
                 .ifPresent(member -> {
                     throw new AlreadyExistMemberEmailException(ErrorMessage.ALREADY_EXIST_MEMBER_EMAIL_EXCEPTION, "이미 존재하는 이메일 정보입니다");
                 });

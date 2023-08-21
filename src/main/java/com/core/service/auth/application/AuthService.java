@@ -8,6 +8,7 @@ import com.core.service.error.exception.member.InvalidPasswordMatchException;
 import com.core.service.error.exception.member.NotExistMemberException;
 import com.core.service.member.application.EncoderService;
 import com.core.service.member.domain.Member;
+import com.core.service.member.domain.vo.Email;
 import com.core.service.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -40,12 +41,12 @@ public class AuthService {
      */
     @Transactional(readOnly = true)
     public String userLogin(JoinRequest joinRequest){
-        Member member = memberRepository.findByEmail(joinRequest.email())
+        Member member = memberRepository.findByEmail(new Email(joinRequest.email()))
                 .orElseThrow(
                         () -> new NotExistMemberException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다.")
                 );
 
-        if(!encoderService.passwordMatch(joinRequest.password(), member.getPassword())) {
+        if(!encoderService.passwordMatch(joinRequest.password(), member.getPassword().getPassword())) {
             throw new InvalidPasswordMatchException(ErrorMessage.INVALID_PASSWORD_MATCH_EXCEPTION, "잘못된 비밀번호 입니다");
         }
 
