@@ -11,7 +11,7 @@ public class EncoderService {
     private final PasswordEncoder passwordEncoder;
 
     public Member encodePassword(Member member) {
-        member.encodePassword(encoder(member.getPassword()));
+        member.encodePassword(encoder(member.getPassword().getPassword()));
         return member;
     }
 

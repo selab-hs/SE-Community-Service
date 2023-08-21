@@ -16,11 +16,11 @@ public class UserDetail {
 
     public UserDetail(Member member) {
         this.id = member.getId();
-        this.userEmail = member.getEmail();
-        this.userPassword = member.getPassword();
-        this.name = member.getName();
+        this.userEmail = member.getEmail().getEmail();
+        this.userPassword = member.getPassword().getPassword();
+        this.name = member.getName().getName();
         this.grade = member.getGrade();
-        this.classNumber = member.getClassNumber();
+        this.classNumber = member.getClassNumber().getClassNumber();
         this.roleType = member.getRoleType();
     }
 }
