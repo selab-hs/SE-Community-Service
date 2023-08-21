@@ -4,15 +4,20 @@ import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.member.InvalidEmailException;
 import lombok.Getter;
 
+import javax.persistence.Embeddable;
 import java.util.regex.Pattern;
 
 @Getter
+@Embeddable
 public class ClassNumber {
     private static final String CLASS_CLASS_NUMBER_REGEX = "^[0-9]{2}학번$";
     private String classNumber;
 
     public ClassNumber(String classNumber) {
         validateEmail(classNumber);
+    }
+
+    protected ClassNumber() {
     }
 
     private void validateEmail(String classNumber) {
