@@ -38,7 +38,6 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private Optional<UserDetail> userInfo(HttpServletRequest request){
-        var userDetail = defaultAuthenticationStrategy.get(request).userDetail();
-        return Optional.ofNullable(userDetail);
+        return Optional.of(defaultAuthenticationStrategy.get(request).userDetail());
     }
 }
