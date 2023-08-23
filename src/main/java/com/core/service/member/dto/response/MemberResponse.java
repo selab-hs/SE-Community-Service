@@ -12,17 +12,17 @@ public class MemberResponse {
     private String email;
     private String name;
     private Long grade;
-    private String classNumber;
+    private String studentId;
     private RoleType roleType;
 
     @Builder
     public MemberResponse(Long id, String email, String name,
-                          Long grade, String classNumber, RoleType roleType){
+                          Long grade, String studentId, RoleType roleType){
         this.id = id;
         this.email = email;
         this.name = name;
         this.grade = grade;
-        this.classNumber = classNumber;
+        this.studentId = studentId;
         this.roleType = roleType;
     }
 }
