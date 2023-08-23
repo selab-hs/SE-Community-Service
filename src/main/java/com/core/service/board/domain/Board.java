@@ -25,7 +25,7 @@ public class Board extends BaseEntity {
     @Column(name = "board_id")
     private Long id;
 
-    private String memberId;
+    private Long memberId;
 
     private String title;
 
