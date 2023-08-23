@@ -7,8 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CreateBoardRequest {
-    private Long id;
-    private String memberId;
     private String title;
     private String content;
 }

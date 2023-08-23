@@ -1,5 +1,6 @@
 package com.core.service.board.domain.converter;
 
+import com.core.service.auth.domain.UserDetail;
 import com.core.service.board.domain.Board;
 import com.core.service.board.dto.Response.ReadAllBoardResponse;
 import com.core.service.board.dto.Response.ReadBoardResponse;
@@ -10,10 +11,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BoardConverter {
 
-    public Board convertToBoardEntity(CreateBoardRequest request){
+    public Board convertToBoardEntity(CreateBoardRequest request, UserDetail userInfo){
         return Board.builder()
-            .id(request.getId())
-            .memberId(request.getMemberId())
+            .memberId(userInfo.getId())
             .title(request.getTitle())
             .content(request.getContent())
             .build();
