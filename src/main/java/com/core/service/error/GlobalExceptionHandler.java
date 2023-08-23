@@ -32,11 +32,4 @@ public class GlobalExceptionHandler {
 
         return ErrorResponseDto.of(errorMessage);
     }
-
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ErrorResponseDto> handleException(Exception e) {
-        log.error("[ERROR] Exception -> {}", e.getMessage());
-
-        return ErrorResponseDto.of(ErrorMessage.INTERNAL_SERVER_ERROR);
-    }
 }
