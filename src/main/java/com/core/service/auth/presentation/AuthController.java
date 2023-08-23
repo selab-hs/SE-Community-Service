@@ -16,7 +16,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseDto> login(@RequestBody JoinRequest request) {
+    public ResponseEntity<?> login(@RequestBody JoinRequest request) {
         var userDetail = authService.userLogin(request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_LOAD_MEMBER_INFORMATION, userDetail);

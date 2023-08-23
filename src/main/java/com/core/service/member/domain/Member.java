@@ -1,6 +1,7 @@
 package com.core.service.member.domain;
 
 import com.core.service.common.domain.BaseEntity;
+import com.core.service.member.domain.converter.PasswordEncodeConverter;
 import com.core.service.member.domain.vo.*;
 import com.core.service.member.dto.request.UpdateMemberRequest;
 import com.core.service.member.dto.response.MemberResponse;
@@ -22,8 +23,8 @@ public class Member extends BaseEntity {
     private Email email;
 
     @Column
-    @Embedded
-    private Password password;
+    @Convert(converter=PasswordEncodeConverter.class)
+    private String password;
 
     @Column
     @Embedded
@@ -34,7 +35,7 @@ public class Member extends BaseEntity {
 
     @Column
     @Embedded
-    private ClassNumber classNumber;
+    private StudentId studentId;
 
     @Column
     @Enumerated
@@ -42,12 +43,12 @@ public class Member extends BaseEntity {
 
     @Builder
     public Member(String email, String password, String name,
-                  Long grade, String classNumber){
+                  Long grade, String studentId){
         this.email = new Email(email);
-        this.password = new Password(password);
+        this.password = password;
         this.name = new Name(name);
         this.grade = grade;
-        this.classNumber = new ClassNumber(classNumber);
+        this.studentId = new StudentId(studentId);
         this.roleType = RoleType.LAB_USER;
     }
 
@@ -57,18 +58,18 @@ public class Member extends BaseEntity {
                 .email(email.getEmail())
                 .name(name.getName())
                 .grade(grade)
-                .classNumber(classNumber.getClassNumber())
+                .studentId(studentId.getStudentId())
                 .roleType(roleType)
                 .build();
     }
 
     public void encodePassword(String encodePassword) {
-        this.password.setEncodePassword(encodePassword);
+        this.password = encodePassword;
     }
 
     public void updateMember(UpdateMemberRequest request) {
         this.email = new Email(request.getEmail());
-        this.password = new Password(request.getPassword());
+        this.password = request.getPassword();
         this.name = new Name(request.getName());
         this.grade = request.getGrade();
     }

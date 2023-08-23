@@ -6,11 +6,10 @@ import com.core.service.auth.token.TokenProvider;
 import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.member.InvalidPasswordMatchException;
 import com.core.service.error.exception.member.NotExistMemberException;
-import com.core.service.member.application.EncoderService;
-import com.core.service.member.domain.Member;
 import com.core.service.member.domain.vo.Email;
 import com.core.service.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
     private final TokenProvider tokenProvider;
     private final MemberRepository memberRepository;
-    private final EncoderService encoderService;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * @brief      * 유저 조회
@@ -41,12 +40,12 @@ public class AuthService {
      */
     @Transactional(readOnly = true)
     public String userLogin(JoinRequest joinRequest){
-        Member member = memberRepository.findByEmail(new Email(joinRequest.email()))
+        var member = memberRepository.findByEmail(new Email(joinRequest.email()))
                 .orElseThrow(
                         () -> new NotExistMemberException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다.")
                 );
 
-        if(!encoderService.passwordMatch(joinRequest.password(), member.getPassword().getPassword())) {
+        if(!passwordEncoder.matches(joinRequest.password(), member.getPassword())) {
             throw new InvalidPasswordMatchException(ErrorMessage.INVALID_PASSWORD_MATCH_EXCEPTION, "잘못된 비밀번호 입니다");
         }
 

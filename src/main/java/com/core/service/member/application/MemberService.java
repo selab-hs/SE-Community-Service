@@ -4,8 +4,10 @@ import com.core.service.auth.domain.UserDetail;
 import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.member.AlreadyExistMemberEmailException;
 import com.core.service.error.exception.member.InvalidLoginInfoException;
+import com.core.service.error.exception.member.LoginTokenNullException;
 import com.core.service.member.domain.Member;
 import com.core.service.member.domain.vo.Email;
+import com.core.service.member.domain.vo.RoleType;
 import com.core.service.member.dto.request.CreateMemberRequest;
 import com.core.service.member.dto.request.UpdateMemberRequest;
 import com.core.service.member.dto.response.MemberResponse;
@@ -22,29 +24,26 @@ import java.util.stream.Collectors;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final EncoderService encoderService;
 
     @Transactional
     public MemberResponse joinMember(CreateMemberRequest request) {
         duplicateValidationMemberEmail(request.getEmail());
-        var member = encoderService.encodePassword(request.toEntity());
-        var response = memberRepository.save(member);
+        var response = memberRepository.save(request.toEntity());
 
         return response.toResponseDto();
     }
 
     public List<MemberResponse> searchAllMember() {
-        var response = memberRepository.findAll().stream()
-                .map(member -> member.toResponseDto())
+        return memberRepository.findAll().stream()
+                .map(Member::toResponseDto)
                 .collect(Collectors.toList());
-        return response;
     }
 
     @Transactional
     public MemberResponse updateMember(UserDetail detail, UpdateMemberRequest request) {
+        loginCheckException(detail);
         var member = findByIdFromLogin(detail.getId());
         member.updateMember(request);
-        encoderService.encodePassword(member);
         memberRepository.save(member);
 
         return member.toResponseDto();
@@ -63,5 +62,11 @@ public class MemberService {
     public Member findByIdFromLogin(Long id) {
         return memberRepository.findById(id)
                 .orElseThrow(() -> new InvalidLoginInfoException(ErrorMessage.INVALID_LOGIN_USER_INFORMATION_EXCEPTION, "잘못된 유저 로그인 정보입니다"));
+    }
+
+    private void loginCheckException(UserDetail detail) {
+        if(detail.getRoleType() == RoleType.GUEST) {
+            throw new LoginTokenNullException(ErrorMessage.NOT_LOGIN_USER_EXCEPTION, "로그인 정보가 없습니다");
+        }
     }
 }

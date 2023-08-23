@@ -11,16 +11,20 @@ public class UserDetail {
     private String userPassword;
     private String name;
     private Long grade;
-    private String classNumber;
+    private String studentID;
     private RoleType roleType;
 
     public UserDetail(Member member) {
         this.id = member.getId();
         this.userEmail = member.getEmail().getEmail();
-        this.userPassword = member.getPassword().getPassword();
+        this.userPassword = member.getPassword();
         this.name = member.getName().getName();
         this.grade = member.getGrade();
-        this.classNumber = member.getClassNumber().getClassNumber();
+        this.studentID = member.getStudentId().getStudentId();
         this.roleType = member.getRoleType();
+    }
+
+    public UserDetail() {
+        this.roleType = RoleType.GUEST;
     }
 }

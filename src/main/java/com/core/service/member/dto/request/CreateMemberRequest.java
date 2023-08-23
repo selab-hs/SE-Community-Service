@@ -24,7 +24,7 @@ public class CreateMemberRequest {
     private Long grade;
 
     @NotNull
-    private String classNumber;
+    private String studentId;
 
     public Member toEntity(){
         return Member.builder()
@@ -32,7 +32,7 @@ public class CreateMemberRequest {
                 .password(password)
                 .name(name)
                 .grade(grade)
-                .classNumber(classNumber)
+                .studentId(studentId)
                 .build();
     }
 }
