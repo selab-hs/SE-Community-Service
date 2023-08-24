@@ -4,7 +4,6 @@ import static com.core.service.error.dto.ErrorMessage.NON_EXISTENT_BOARD_EXCEPTI
 import static com.core.service.error.dto.ErrorMessage.UNAUTHORIZED_ACCESS_EXCEPTION;
 
 import com.core.service.auth.domain.UserDetail;
-import com.core.service.board.domain.Board;
 import com.core.service.board.domain.converter.BoardConverter;
 import com.core.service.board.dto.Response.ReadAllBoardResponse;
 import com.core.service.board.dto.Response.ReadBoardResponse;
@@ -28,10 +27,7 @@ public class BoardService {
     private final BoardConverter converter;
 
     @Transactional
-    public void create(
-        CreateBoardRequest request,
-        UserDetail userInfo
-    ) {
+    public void create(CreateBoardRequest request, UserDetail userInfo) {
         if (userInfo.getRoleType()
             .equals(RoleType.LAB_LEADER) ||
             userInfo.getRoleType()
@@ -47,10 +43,20 @@ public class BoardService {
     }
 
     @Transactional
-    public void update(Long boardId, UpdateBoardRequest request) {
-        Board board = boardRepository.findById(boardId)
-            .orElseThrow(
-                () -> new NonExistentBoardException(
+    public void update(Long boardId, UpdateBoardRequest request, UserDetail userInfo) {
+        if (boardRepository.existsByIdAndMemberId(
+            boardId, userInfo.getId()) &&
+            (userInfo.getRoleType()
+                .equals(RoleType.LAB_LEADER) ||
+                userInfo.getRoleType()
+                    .equals(RoleType.LAB_USER))) {
+            throw new UnauthorizedAccessException(
+                UNAUTHORIZED_ACCESS_EXCEPTION,
+                "권한이 없는 접근입니다."
+            );
+        }
+        var board = boardRepository.findById(boardId)
+            .orElseThrow(() -> new NonExistentBoardException(
                     NON_EXISTENT_BOARD_EXCEPTION,
                     "업데이트 단일 게시판 조회 실패"
                 )
@@ -64,15 +70,14 @@ public class BoardService {
         if (userInfo.getRoleType()
             .equals(RoleType.LAB_LEADER) ||
             userInfo.getRoleType()
-                .equals(RoleType.LAB_USER))
-        {
+                .equals(RoleType.LAB_USER)) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
             );
         }
 
-        Board board = boardRepository.findById(boardId)
+        var board = boardRepository.findById(boardId)
             .orElseThrow(
                 () -> new NonExistentBoardException(
                     NON_EXISTENT_BOARD_EXCEPTION,
@@ -91,26 +96,30 @@ public class BoardService {
     }
 
     @Transactional
-    public void delete(Long id, UserDetail userInfo) {
-        if (boardRepository.existsByIdAndMemberId(id, userInfo.getId()) &&
+    public void delete(Long boardId, UserDetail userInfo) {
+        if (boardRepository.existsByIdAndMemberId(
+            boardId, userInfo.getId()) &&
             (userInfo.getRoleType()
                 .equals(RoleType.LAB_LEADER) ||
                 userInfo.getRoleType()
-                    .equals(RoleType.LAB_USER)))
-        {
+                    .equals(RoleType.LAB_USER))) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
             );
         }
-        boardRepository.deleteById(id);
+        boardRepository.deleteById(boardId);
     }
 
     @Transactional
-    public Long plusView(Long id) {
-        Board board = boardRepository.findById(id).orElseThrow(
-            () -> new NonExistentBoardException(NON_EXISTENT_BOARD_EXCEPTION,
-                "게시글 조회 단일 게시판 조회 실패"));
+    public Long plusView(Long boardId) {
+        var board = boardRepository.findById(boardId)
+            .orElseThrow(
+                () -> new NonExistentBoardException(
+                    NON_EXISTENT_BOARD_EXCEPTION,
+                    "게시글 조회 단일 게시판 조회 실패"
+                )
+            );
         board.updateView();
         boardRepository.save(board);
 

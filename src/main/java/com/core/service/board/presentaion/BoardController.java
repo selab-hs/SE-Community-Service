@@ -43,7 +43,7 @@ public class BoardController {
         @PageableDefault(sort = "id", size = 15, direction = Direction.ASC)
         Pageable pageable
     ) {
-        Page<ReadAllBoardResponse> boards = boardService.getAll(pageable);
+        var boards = boardService.getAll(pageable);
 
         return ResponseDto.toResponseEntity(
             ResponseMessage.READ_SUCCESS_ALL_BOARD,
@@ -116,12 +116,13 @@ public class BoardController {
     /**
      * 게시글 조회수 조회.
      *
-     * @param id 해당 board의 id
+     * @// TODO: 2023/08/24 Application Publisher 적용하기
+     * @param id
      * @return detail board view up & search
      */
     @GetMapping("{id}/view")
     public ResponseEntity<?> getView(@PathVariable("id") Long id) {
-        Long viewCount = boardService.plusView(id);
+        var viewCount = boardService.plusView(id);
 
         return ResponseDto.toResponseEntity(
             ResponseMessage.UPDATE_SUCCESS_BOARD,
