@@ -28,10 +28,10 @@ public class BoardService {
 
     @Transactional
     public void create(CreateBoardRequest request, UserDetail userInfo) {
-        if (userInfo.getRoleType()
+        if (!(userInfo.getRoleType()
             .equals(RoleType.LAB_LEADER) ||
             userInfo.getRoleType()
-                .equals(RoleType.LAB_USER)) {
+                .equals(RoleType.LAB_USER))) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -44,12 +44,12 @@ public class BoardService {
 
     @Transactional
     public void update(Long boardId, UpdateBoardRequest request, UserDetail userInfo) {
-        if (boardRepository.existsByIdAndMemberId(
+        if (!(boardRepository.existsByIdAndMemberId(
             boardId, userInfo.getId()) &&
             (userInfo.getRoleType()
                 .equals(RoleType.LAB_LEADER) ||
                 userInfo.getRoleType()
-                    .equals(RoleType.LAB_USER))) {
+                    .equals(RoleType.LAB_USER)))) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -67,10 +67,10 @@ public class BoardService {
 
     @Transactional(readOnly = true)
     public ReadBoardResponse get(Long boardId, UserDetail userInfo) {
-        if (userInfo.getRoleType()
+        if (!(userInfo.getRoleType()
             .equals(RoleType.LAB_LEADER) ||
             userInfo.getRoleType()
-                .equals(RoleType.LAB_USER)) {
+                .equals(RoleType.LAB_USER))) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -97,12 +97,12 @@ public class BoardService {
 
     @Transactional
     public void delete(Long boardId, UserDetail userInfo) {
-        if (boardRepository.existsByIdAndMemberId(
+        if (!(boardRepository.existsByIdAndMemberId(
             boardId, userInfo.getId()) &&
             (userInfo.getRoleType()
                 .equals(RoleType.LAB_LEADER) ||
                 userInfo.getRoleType()
-                    .equals(RoleType.LAB_USER))) {
+                    .equals(RoleType.LAB_USER)))) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
