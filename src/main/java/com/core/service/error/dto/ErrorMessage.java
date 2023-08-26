@@ -23,6 +23,7 @@ public enum ErrorMessage {
     NOT_LOGIN_USER_EXCEPTION(HttpStatus.BAD_REQUEST, "로그인 정보가 없습니다"),
     NON_EXISTENT_BOARD_EXCEPTION(HttpStatus.BAD_REQUEST,"해당 보드가 존재하지 않습니다."),
     UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST,"권한이 없는 접근 입니다."),
+    INVALID_DATA_ARGUMENT(HttpStatus.BAD_REQUEST, "invalid data argument"),
     ;
 
     private final HttpStatus status;
