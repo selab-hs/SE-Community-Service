@@ -1,0 +1,36 @@
+.footer{
+    width: 80%;
+    margin: auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    border-top: 1.5px solid #bcbcbc;
+}
+
+.footer h3{
+    color: #8a8686;
+    font-family: 'BMD';
+}
+
+.footer p, .footer p a{
+    color: #8a8686;
+    font-family: 'BMJ';
+}
+
+.footer h3:before{
+    padding-top : 10px;
+}
+
+.footer p a:hover{
+    color: #000000;
+}
+
+.blank-space{
+    height: 50px;
+}
+
+@media screen and (max-width:1600px){
+    .footer{
+        width: 1200px;
+        height: auto;
+    }
+}
