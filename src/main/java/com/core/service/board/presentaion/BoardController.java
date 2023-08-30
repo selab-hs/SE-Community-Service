@@ -3,14 +3,11 @@ package com.core.service.board.presentaion;
 import com.core.service.auth.domain.UserDetail;
 import com.core.service.auth.infrastructure.annotation.AuthMember;
 import com.core.service.board.application.BoardService;
-import com.core.service.board.dto.Response.ReadAllBoardResponse;
-import com.core.service.board.dto.Response.ReadBoardResponse;
 import com.core.service.board.dto.request.CreateBoardRequest;
 import com.core.service.board.dto.request.UpdateBoardRequest;
 import com.core.service.common.response.dto.ResponseDto;
 import com.core.service.common.response.dto.ResponseMessage;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
@@ -25,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/board")
+@RequestMapping("/api/v1/boards")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -63,8 +60,8 @@ public class BoardController {
         @PathVariable("id") Long id,
         @AuthMember UserDetail userInfo
     ) {
+        boardService.updateBoardView(id);
         var board = boardService.get(id, userInfo);
-        boardService.plusView(id);
 
         return ResponseDto.toResponseEntity(
             ResponseMessage.READ_SUCCESS_BOARD,
@@ -84,7 +81,8 @@ public class BoardController {
         @RequestBody CreateBoardRequest request,
         @AuthMember UserDetail userInfo
     ) {
-        boardService.create(request, userInfo);
+        var boardId = boardService.create(request, userInfo);
+        boardService.createBoardView(boardId);
 
         return ResponseDto.toResponseEntity(
             ResponseMessage.CREATE_SUCCESS_BOARD,
@@ -110,23 +108,6 @@ public class BoardController {
         return ResponseDto.toResponseEntity(
             ResponseMessage.UPDATE_SUCCESS_BOARD,
             "게시판 수정 성공"
-        );
-    }
-
-    /**
-     * 게시글 조회수 조회.
-     *
-     * @// TODO: 2023/08/24 Application Publisher 적용하기
-     * @param id
-     * @return detail board view up & search
-     */
-    @GetMapping("{id}/view")
-    public ResponseEntity<?> getView(@PathVariable("id") Long id) {
-        var viewCount = boardService.plusView(id);
-
-        return ResponseDto.toResponseEntity(
-            ResponseMessage.UPDATE_SUCCESS_BOARD,
-            "조회수 조회 성공"
         );
     }
 

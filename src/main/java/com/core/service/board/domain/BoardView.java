@@ -1,7 +1,5 @@
 package com.core.service.board.domain;
 
-import com.core.service.board.dto.request.UpdateBoardRequest;
-import com.core.service.common.domain.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,22 +16,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Board extends BaseEntity {
+public class BoardView {
 
     @Id
-    @GeneratedValue( strategy = GenerationType.IDENTITY)
-    @Column(name = "board_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long memberId;
+    private Long boardId;
 
-    private String title;
+    @Column(columnDefinition = "bigint default 0")
+    private Long boardView;
 
-    private String content;
-
-
-    public void update(UpdateBoardRequest request){
-        this.title = request.getTitle();
-        this.content = request.getContent();
+    public void update(){
+        ++this.boardView;
     }
 }
