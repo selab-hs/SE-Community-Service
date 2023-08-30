@@ -10,4 +10,5 @@ public class ReadBoardResponse {
         private Long memberId;
         private String title;
         private String content;
+        private Long view;
 }
