@@ -1,0 +1,26 @@
+@font-face {
+    font-family: "BMJ";
+    src: url("../../static/font/BMJUA_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMD";
+    src: url("../../static/font/BMDOHYEON_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMHA";
+    src: url("../../static/font/BMHANNAAir_ttf.ttf");
+}
+
+@font-face {
+    font-family: "BMHP";
+    src: url("../../static/font/BMHANNAPro.ttf");
+}
+
+@font-face {
+    font-family: "BMY";
+    src: url("../../static/font/BMYEONSUNG_ttf.ttf");
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
