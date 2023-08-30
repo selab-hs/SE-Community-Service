@@ -63,10 +63,6 @@ public class Member extends BaseEntity {
                 .build();
     }
 
-    public void encodePassword(String encodePassword) {
-        this.password = encodePassword;
-    }
-
     public void updateMember(UpdateMemberRequest request) {
         this.email = new Email(request.getEmail());
         this.password = request.getPassword();
