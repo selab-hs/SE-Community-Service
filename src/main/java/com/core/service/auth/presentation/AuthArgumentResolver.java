@@ -38,6 +38,6 @@ public class AuthArgumentResolver implements HandlerMethodArgumentResolver {
     }
 
     private Optional<UserDetail> userInfo(HttpServletRequest request){
-        return Optional.of(defaultAuthenticationStrategy.get(request).userDetail());
+        return Optional.of(defaultAuthenticationStrategy.get(request).getUserDetail());
     }
 }
