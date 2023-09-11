@@ -24,6 +24,7 @@ public enum ErrorMessage {
     NON_EXISTENT_BOARD_EXCEPTION(HttpStatus.BAD_REQUEST,"해당 보드가 존재하지 않습니다."),
     UNAUTHORIZED_ACCESS_EXCEPTION(HttpStatus.BAD_REQUEST,"권한이 없는 접근 입니다."),
     INVALID_DATA_ARGUMENT(HttpStatus.BAD_REQUEST, "invalid data argument"),
+    FAILURE_FILE_CONVERT(HttpStatus.BAD_REQUEST, "이미지 업로드 실패"),
     ;
 
     private final HttpStatus status;
