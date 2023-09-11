@@ -18,7 +18,7 @@ public class BoardViewEventListener {
     @Async
     @EventListener
     public void updateBoardView(BoardViewEvent boardViewEvent) {
-        var boardView = boardViewRepository.findByBoardId(boardViewEvent.boardId())
+        var boardView = boardViewRepository.findByBoardId(boardViewEvent.getBoardId())
             .orElseThrow(() -> new NonExistentBoardException(
                     NON_EXISTENT_BOARD_EXCEPTION,
                     "업데이트 단일 게시판 조회 실패"

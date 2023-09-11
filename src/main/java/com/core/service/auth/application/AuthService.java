@@ -40,12 +40,12 @@ public class AuthService {
      */
     @Transactional(readOnly = true)
     public String userLogin(JoinRequest joinRequest){
-        var member = memberRepository.findByEmail(new Email(joinRequest.email()))
+        var member = memberRepository.findByEmail(new Email(joinRequest.getEmail()))
                 .orElseThrow(
                         () -> new NotExistMemberException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "해당 유저 정보가 존재하지 않습니다.")
                 );
 
-        if(!passwordEncoder.matches(joinRequest.password(), member.getPassword())) {
+        if(!passwordEncoder.matches(joinRequest.getPassword(), member.getPassword())) {
             throw new InvalidPasswordMatchException(ErrorMessage.INVALID_PASSWORD_MATCH_EXCEPTION, "잘못된 비밀번호 입니다");
         }
 

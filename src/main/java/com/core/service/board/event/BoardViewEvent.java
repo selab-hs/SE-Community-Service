@@ -1,5 +1,10 @@
 package com.core.service.board.event;
 
-public record BoardViewEvent(Long boardId) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
+@AllArgsConstructor
+@Getter
+public class BoardViewEvent {
+    private Long boardId;
 }

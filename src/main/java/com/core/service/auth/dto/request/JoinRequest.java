@@ -1,5 +1,12 @@
 package com.core.service.auth.dto.request;
 
 
-public record JoinRequest(String email, String password) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@AllArgsConstructor
+@Getter
+public class JoinRequest {
+    private String email;
+    private String password;
 }
