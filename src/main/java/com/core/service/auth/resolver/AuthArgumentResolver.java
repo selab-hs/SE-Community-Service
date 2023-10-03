@@ -1,4 +1,4 @@
-package com.core.service.auth.presentation;
+package com.core.service.auth.resolver;
 
 import com.core.service.auth.domain.UserDetail;
 import com.core.service.auth.infrastructure.annotation.AuthMember;

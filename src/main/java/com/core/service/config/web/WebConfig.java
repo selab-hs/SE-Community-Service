@@ -1,6 +1,6 @@
 package com.core.service.config.web;
 
-import com.core.service.auth.presentation.AuthArgumentResolver;
+import com.core.service.auth.resolver.AuthArgumentResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;

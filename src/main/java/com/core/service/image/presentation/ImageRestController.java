@@ -1,4 +1,4 @@
-package com.core.service.image.controller;
+package com.core.service.image.presentation;
 
 import com.core.service.common.response.dto.ResponseDto;
 import com.core.service.common.response.dto.ResponseMessage;
@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/v1/images")
 @RequiredArgsConstructor
-public class ImageController {
+public class ImageRestController {
 
     private final S3Uploader s3Uploader;
 
