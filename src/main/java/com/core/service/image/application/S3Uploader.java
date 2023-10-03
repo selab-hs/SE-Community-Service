@@ -7,17 +7,19 @@ import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.board.FileConverterException;
 import com.core.service.image.dto.response.UploadBundle;
 import com.core.service.image.dto.response.UploadResponse;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -32,11 +34,12 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucketName;
 
-    public UploadResponse upload(UploadBundle bundle) throws IOException {
+    @SneakyThrows
+    public UploadResponse upload(UploadBundle bundle) {
         File uploadFile = convert(bundle.getMultipartFile())
-            .orElseThrow(
-                () -> new FileConverterException(ErrorMessage.FAILURE_FILE_CONVERT)
-            );
+                .orElseThrow(
+                        () -> new FileConverterException(ErrorMessage.FAILURE_FILE_CONVERT)
+                );
         String uploadImageUrl = upload(uploadFile, bundle.getDirectoryName());
 
         return new UploadResponse(uploadImageUrl);
@@ -53,10 +56,10 @@ public class S3Uploader {
 
         try {
             PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileName,
-                uploadFile);
+                    uploadFile);
             amazonS3Client.putObject(
-                putObjectRequest.withCannedAcl(
-                    CannedAccessControlList.PublicRead)
+                    putObjectRequest.withCannedAcl(
+                            CannedAccessControlList.PublicRead)
             );
         } finally {
             removeNewFile(uploadFile);
@@ -75,7 +78,7 @@ public class S3Uploader {
 
     public Optional<File> convert(MultipartFile file) throws IOException {
         File convertFile = new File(
-            System.getProperty(DIRECTORY_PROPERTY) + URL_SLASH + file.getOriginalFilename());
+                System.getProperty(DIRECTORY_PROPERTY) + URL_SLASH + file.getOriginalFilename());
         if (convertFile.createNewFile()) {
             try (FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
