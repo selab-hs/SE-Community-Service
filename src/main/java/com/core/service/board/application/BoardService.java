@@ -57,9 +57,7 @@ public class BoardService {
 
     @Transactional
     public void update(Long boardId, UpdateBoardRequest request, UserDetail userInfo) {
-        if (!(boardRepository.existsByIdAndMemberId(boardId, userInfo.getId()) &&
-            (userInfo.getRoleType().equals(RoleType.LAB_LEADER) ||
-                userInfo.getRoleType().equals(RoleType.LAB_USER))))
+        if (!(boardRepository.existsByIdAndMemberId(boardId, userInfo.getId())))
         {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
@@ -77,9 +75,12 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public ReadBoardResponse get(Long boardId, UserDetail userInfo) {
+    public ReadBoardResponse get(
+        Long boardId,
+        UserDetail userInfo
+    ) {
         if (!(userInfo.getRoleType().equals(RoleType.LAB_LEADER) ||
-                userInfo.getRoleType().equals(RoleType.LAB_USER)))
+            userInfo.getRoleType().equals(RoleType.LAB_USER)))
         {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
