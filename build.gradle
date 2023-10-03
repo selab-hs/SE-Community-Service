@@ -22,20 +22,26 @@ repositories {
 }
 
 dependencies {
+    // spring starter
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.281'
-
-    // password Encryption
     implementation 'org.springframework.security:spring-security-crypto'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // database
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // aws
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.351'
 
     // jwt
     implementation('io.jsonwebtoken:jjwt-api:0.11.5')
@@ -45,11 +51,8 @@ dependencies {
     //swagger springdoc
     implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'
 
-    // spring actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
-
+    // test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
