@@ -1,8 +1,9 @@
 package com.core.service.image.application;
 
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.core.service.config.s3.S3Config;
 import com.core.service.error.dto.ErrorMessage;
 import com.core.service.error.exception.board.FileConverterException;
 import com.core.service.image.dto.response.UploadBundle;
@@ -11,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,15 +24,12 @@ import java.util.UUID;
 @Component
 @RequiredArgsConstructor
 public class S3Uploader {
+    private final AmazonS3 amazonS3;
+    private final S3Config s3Config;
     private static final Logger log = LoggerFactory.getLogger(S3Uploader.class);
 
     private static final String URL_SLASH = "/";
     private static final String DIRECTORY_PROPERTY = "user.dir";
-
-    private final AmazonS3Client amazonS3Client;
-
-    @Value("${cloud.aws.s3.bucket}")
-    public String bucketName;
 
     @SneakyThrows
     public UploadResponse upload(UploadBundle bundle) {
@@ -55,9 +52,9 @@ public class S3Uploader {
     public String putS3(File uploadFile, String fileName) {
 
         try {
-            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, fileName,
+            PutObjectRequest putObjectRequest = new PutObjectRequest(s3Config.bucket(), fileName,
                     uploadFile);
-            amazonS3Client.putObject(
+            amazonS3.putObject(
                     putObjectRequest.withCannedAcl(
                             CannedAccessControlList.PublicRead)
             );
@@ -65,7 +62,7 @@ public class S3Uploader {
             removeNewFile(uploadFile);
         }
 
-        return amazonS3Client.getUrl(bucketName, fileName).toString();
+        return amazonS3.getUrl(s3Config.bucket(), fileName).toString();
     }
 
     public void removeNewFile(File targetFile) {
