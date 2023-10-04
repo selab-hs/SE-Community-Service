@@ -26,7 +26,7 @@ public class CommentService {
 
     @Transactional
     public void create(CreateCommentRequest request, UserDetail userInfo) {
-        if (userInfo.getRoleType().equals(RoleType.LAB_USER)) {
+        if (!userInfo.getRoleType().equals(RoleType.LAB_USER)) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -39,7 +39,8 @@ public class CommentService {
 
     @Transactional
     public void update(Long commentId, UpdateCommentRequest request, UserDetail userInfo) {
-        if (commentRepository.existsByIdAndMemberId(commentId, userInfo.getId())) {
+
+        if (!commentRepository.existsByIdAndMemberId(commentId, userInfo.getId())) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -52,7 +53,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<ReadCommentResponse> getAll(ReadCommentRequest request, UserDetail userInfo) {
-        if (userInfo.getRoleType().equals(RoleType.LAB_USER)) {
+        if (!userInfo.getRoleType().equals(RoleType.LAB_USER)) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -66,7 +67,7 @@ public class CommentService {
 
     @Transactional
     public void delete(Long commentId, UserDetail userInfo) {
-        if (commentRepository.existsByIdAndMemberId(commentId, userInfo.getId())) {
+        if (!commentRepository.existsByIdAndMemberId(commentId, userInfo.getId())) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
