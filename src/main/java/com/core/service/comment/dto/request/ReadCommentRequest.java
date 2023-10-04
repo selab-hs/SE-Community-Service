@@ -4,5 +4,9 @@ import lombok.Getter;
 
 @Getter
 public class ReadCommentRequest {
-    private Long boardId;
+    private final Long boardId;
+
+    public ReadCommentRequest(Long boardId){
+        this.boardId = boardId;
+    }
 }
