@@ -20,7 +20,7 @@ configurations {
 repositories {
     mavenCentral()
 }
-
+1
 dependencies {
     // spring starter
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
