@@ -39,6 +39,7 @@ public class CommentService {
 
     @Transactional
     public void update(Long commentId, UpdateCommentRequest request, UserDetail userInfo) {
+
         if (!commentRepository.existsByIdAndMemberId(commentId, userInfo.getId())) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
