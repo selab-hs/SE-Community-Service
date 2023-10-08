@@ -14,12 +14,12 @@ import java.util.TimeZone;
 @Slf4j
 @SpringBootApplication
 @RequiredArgsConstructor
-public class ServiceApplication implements ApplicationListener<ApplicationReadyEvent> {
+public class Application implements ApplicationListener<ApplicationReadyEvent> {
     private final Environment environment;
 
     public static void main(String[] args) {
         init();
-        SpringApplication.run(ServiceApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Override
