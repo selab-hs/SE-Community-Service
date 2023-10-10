@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko-kr" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="headerFragment">
+    <div class='header'>
+        <a >
+            <img class='logo' alt="logo" src='images/se-lab.png'/>
+        </a>
+
+        <div class="header-text">
+            <label class="main-text">SE LAB</label>
+            <label class="sub-text">Software engineering LAB</label>
+        </div>
+
+        <div class='navbar'>
+            <a class='navi-item'><div>Home</div></a>
+            <a class='navi-item'><div>Support</div></a>
+            <a class='navi-item'><div>Board</div></a>
+        </div>
+
+        <div class='header-toolbar'>
+            <a >Login/Logout</a> | <a >Join</a> | <a >Mypage</a>
+        </div>
+    </div>
+
+    <div class="blank-space"></div>
+</th:block>
+</html>
