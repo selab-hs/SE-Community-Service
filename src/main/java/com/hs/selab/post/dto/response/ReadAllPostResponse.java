@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 public class ReadAllPostResponse {
     private Long id;
+    private Long boardId;
     private Long memberId;
     private String title;
     private String content;

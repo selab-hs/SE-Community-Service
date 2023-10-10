@@ -32,7 +32,11 @@ public class PostService {
     private final PostConverter converter;
 
     @Transactional
-    public Long create(CreatePostRequest request, UserDetail userInfo) {
+    public Long create(
+        CreatePostRequest request,
+        UserDetail userInfo,
+        Long boardId
+        ) {
         if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
         {
             throw new UnauthorizedAccessException(
@@ -40,7 +44,7 @@ public class PostService {
                 "권한이 없는 접근입니다."
             );
         }
-        var post = converter.convertToPostEntity(request, userInfo);
+        var post = converter.convertToPostEntity(request, userInfo, boardId);
         postRepository.save(post);
 
         return post.getId();
@@ -48,8 +52,8 @@ public class PostService {
 
     @Async
     @Transactional
-    public void createPostView(Long postId){
-        var postView = converter.convertToEventPostView(postId);
+    public void createPostView(Long postId, Long boardId){
+        var postView = converter.convertToEventPostView(postId, boardId);
         postViewRepository.save(postView);
     }
 
@@ -101,10 +105,10 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ReadAllPostResponse> getAll(Pageable pageable) {
+    public Page<ReadAllPostResponse> getAll(Pageable pageable,Long boardId) {
         return converter.convertToReadAllPostResponse(
-            postRepository.findAll(),
-            postViewRepository.findAll(),
+            postRepository.findAllByBoardId(boardId),
+            postViewRepository.findAllByBoardId(boardId),
             pageable
         );
     }
@@ -125,5 +129,6 @@ public class PostService {
             );
         }
         postRepository.deleteById(postId);
+        postViewRepository.deleteById(postId);
     }
 }

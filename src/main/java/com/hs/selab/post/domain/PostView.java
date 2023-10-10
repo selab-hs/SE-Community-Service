@@ -22,6 +22,7 @@ public class PostView {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long boardId;
     private Long postId;
 
     @Column(columnDefinition = "bigint default 0")

@@ -9,8 +9,6 @@ import lombok.Setter;
 @Builder
 public class ReadAllBoardResponse {
     private Long id;
-    private Long memberId;
     private String title;
     private String content;
-    private Long view;
 }

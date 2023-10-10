@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,9 +33,10 @@ public class PostRestController {
     @GetMapping
     public ResponseEntity<?> getAllPosts(
         @PageableDefault(sort = "id", size = 15, direction = Direction.ASC)
-        Pageable pageable
+        Pageable pageable,
+        @RequestParam(value = "boardId") Long id
     ) {
-        var posts = postService.getAll(pageable);
+        var posts = postService.getAll(pageable,id);
 
         return ResponseDto.toResponseEntity(
             ResponseMessage.READ_SUCCESS_ALL_BOARD,
@@ -60,10 +62,11 @@ public class PostRestController {
     @PostMapping
     public ResponseEntity<?> createPost(
         @RequestBody CreatePostRequest request,
-        @AuthMember UserDetail userInfo
+        @AuthMember UserDetail userInfo,
+        @RequestParam(value = "boardId") Long id
     ) {
-        var postId = postService.create(request, userInfo);
-        postService.createPostView(postId);
+        var postId = postService.create(request, userInfo, id);
+        postService.createPostView(postId, id);
 
         return ResponseDto.toResponseEntity(
             ResponseMessage.CREATE_SUCCESS_BOARD,
