@@ -61,7 +61,7 @@ public class CommentService {
         }
 
         return converter.convertToReadCommentResponse(
-            commentRepository.findAllByBoardId(request.getBoardId())
+            commentRepository.findAllByPostId(request.getPostId())
         );
     }
 

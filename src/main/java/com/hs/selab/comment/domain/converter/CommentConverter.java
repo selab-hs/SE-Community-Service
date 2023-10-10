@@ -16,6 +16,7 @@ public class CommentConverter {
         return Comment.builder()
             .memberId(userInfo.getId())
             .boardId(request.getBoardId())
+            .postId(request.getPostId())
             .comment(request.getComment())
             .build();
     }
@@ -26,6 +27,7 @@ public class CommentConverter {
               .commentId(comment.getId())
               .memberId(comment.getMemberId())
               .boardId(comment.getBoardId())
+              .postId(comment.getPostId())
               .comment(comment.getComment())
               .build()
         ).collect(Collectors.toList());
