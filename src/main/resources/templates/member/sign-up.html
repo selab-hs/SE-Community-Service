@@ -7,66 +7,64 @@
         <div class='join_container'>
             <div class='join_box'>
                 <div class='join_content'>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div class='join_input_row'>
-                            <span class='join_title'>Email</span>
-                            <div class="join_email">
-                                <span class='input_span_email'>
-                                    <input type='text' placeholder="사용할 Email 입력" id="email_input" onblur="email_check()"/>
-                                </span>
-                                <button>중복확인</button>
-                            </div>
-                            <span id='email_error_text' class='join_error_text'>아이디가 중복확인 되지 않았습니다.</span>
-                        </div>
-
-                        <div class='join_input_row'>
-                            <span class='join_title'>Pwd</span>
-                            <span class='pull_input_span'>
-                                <input type='password' placeholder="영문자 숫자 특수문자를 포함한 8~16자 입력" id="password_input" onblur="pwd_check()"/>
+                    <div class='join_input_row'>
+                        <span class='join_title'>Email</span>
+                        <div class="join_email">
+                            <span class='input_span_email'>
+                                <input type='text' placeholder="사용할 Email 입력" id="email_input" onblur="email_check()"/>
                             </span>
-                            <span id='password_error_text' class='join_error_text'>잘못된 비빌번호 형식입니다.</span>
+                            <button onclick="email_duplication_check()">중복확인</button>
                         </div>
+                        <span id='email_error_text' class='join_error_text'>유효한 이메일 형식이 아닙니다.</span>
+                    </div>
 
-                        <div class='join_input_row'>
-                            <span class='join_title'>Pwd Check</span>
-                            <span class='pull_input_span'>
-                                <input type='password' placeholder="비번 재입력" id="password_check_input" onblur="pwd_check2()"/>
-                            </span>
-                            <span id='password_check_error_text' class='join_error_text'>비밀번호가 동일하지 않습니다.</span>
-                        </div>
+                    <div class='join_input_row'>
+                        <span class='join_title'>Pwd</span>
+                        <span class='pull_input_span'>
+                            <input type='password' placeholder="영문자 숫자 특수문자를 포함한 8~16자 입력" id="password_input" onblur="pwd_check()"/>
+                        </span>
+                        <span id='password_error_text' class='join_error_text'>잘못된 비빌번호 형식입니다.</span>
+                    </div>
 
-                        <div class='join_input_row'>
-                            <span class='join_title'>Name</span>
-                            <span class='pull_input_span'>
-                                <input type='text' placeholder="한글 1자~5자 입력" id="name_input" onblur="name_check()"/>
-                            </span>
-                            <span id='name_error_text' class='join_error_text'>이름이 유효하지않습니다.</span>
-                        </div>
+                    <div class='join_input_row'>
+                        <span class='join_title'>Pwd Check</span>
+                        <span class='pull_input_span'>
+                            <input type='password' placeholder="비번 재입력" id="password_check_input" onblur="pwd_check2()"/>
+                        </span>
+                        <span id='password_check_error_text' class='join_error_text'>비밀번호가 동일하지 않습니다.</span>
+                    </div>
 
-                        <div class='join_input_row'>
-                            <span class='join_title'>Grade</span>
-                            <span class='pull_input_span'>
-                                <select>
-                                    <option value="1">1학년</option>
-                                    <option value="2">2학년</option>
-                                    <option value="3">3학년</option>
-                                    <option value="4">4학년</option>
-                                </select>
-                            </span>
-                        </div>
+                    <div class='join_input_row'>
+                        <span class='join_title'>Name</span>
+                        <span class='pull_input_span'>
+                            <input type='text' placeholder="한글 1자~5자 입력" id="name_input" onblur="name_check()"/>
+                        </span>
+                        <span id='name_error_text' class='join_error_text'>이름이 유효하지않습니다.</span>
+                    </div>
 
-                        <div class='join_input_row'>
-                            <span class='join_title'>Student ID</span>
-                            <span class='pull_input_span'>
-                                <input type='text' maxLength="4" placeholder="'00학번' 입력" id="student_id_input" onblur="student_id_check()"/>
-                            </span>
-                            <span id='student_id_error_text' class='join_error_text'>유효하지 않은 학번 형식입니다.</span>
-                        </div>
+                    <div class='join_input_row'>
+                        <span class='join_title'>Grade</span>
+                        <span class='pull_input_span'>
+                            <select id="grade_select">
+                                <option value="1">1학년</option>
+                                <option value="2">2학년</option>
+                                <option value="3">3학년</option>
+                                <option value="4">4학년</option>
+                            </select>
+                        </span>
+                    </div>
 
-                        <div class='join_button_row'>
-                            <button type='button'>Join</button>
-                        </div>
-                    </form>
+                    <div class='join_input_row'>
+                        <span class='join_title'>Student ID</span>
+                        <span class='pull_input_span'>
+                            <input type='text' maxLength="4" placeholder="'00학번' 입력" id="student_id_input" onblur="student_id_check()"/>
+                        </span>
+                        <span id='student_id_error_text' class='join_error_text'>유효하지 않은 학번 형식입니다.</span>
+                    </div>
+
+                    <div class='join_button_row'>
+                        <button type='button' onclick="sing_up_submit()">Join</button>
+                    </div>
                 </div>
             </div>
         </div>
