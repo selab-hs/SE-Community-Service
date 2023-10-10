@@ -15,16 +15,18 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PostConverter {
-    public Post convertToPostEntity(CreatePostRequest request, UserDetail userInfo) {
+    public Post convertToPostEntity(CreatePostRequest request, UserDetail userInfo, Long boardId) {
         return Post.builder()
+            .boardId(boardId)
             .memberId(userInfo.getId())
             .title(request.getTitle())
             .content(request.getContent())
             .build();
     }
-    public PostView convertToEventPostView(Long postId){
+    public PostView convertToEventPostView(Long postId, Long boardId){
         return PostView.builder()
             .postId(postId)
+            .boardId(boardId)
             .postView(0L)
             .build();
     }
@@ -33,6 +35,7 @@ public class PostConverter {
     public ReadPostResponse convertToReadPostResponse(Post post, Long postView) {
         return ReadPostResponse.builder()
             .id(post.getId())
+            .boardId(post.getBoardId())
             .memberId(post.getMemberId())
             .title(post.getTitle())
             .content(post.getContent())
@@ -53,6 +56,7 @@ public class PostConverter {
             result.add(
                 ReadAllPostResponse.builder()
                     .id(post.getId())
+                    .boardId(post.getBoardId())
                     .memberId(post.getMemberId())
                     .title(post.getTitle())
                     .content(post.getTitle())

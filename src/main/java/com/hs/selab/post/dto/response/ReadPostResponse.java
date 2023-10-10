@@ -7,6 +7,7 @@ import lombok.Getter;
 @Getter
 public class ReadPostResponse {
         private Long id;
+        private Long boardId;
         private Long memberId;
         private String title;
         private String content;

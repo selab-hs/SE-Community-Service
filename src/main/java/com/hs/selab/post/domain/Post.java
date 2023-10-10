@@ -29,6 +29,8 @@ public class Post extends BaseEntity {
 
     private Long memberId;
 
+    private Long boardId;
+
     private String title;
 
     private String content;
