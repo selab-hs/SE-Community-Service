@@ -1,6 +1,5 @@
 package com.hs.selab.auth.dto.request;
 
-
 import lombok.Getter;
 
 @Getter
