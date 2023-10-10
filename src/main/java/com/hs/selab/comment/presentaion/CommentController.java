@@ -56,7 +56,7 @@ public class CommentController {
 
     @GetMapping()
     public ResponseEntity<?> getAllComments(
-        @RequestParam(value = "boardId") Long id,
+        @RequestParam(value = "postId") Long id,
         @AuthMember UserDetail userInfo
         ){
         var comments =  commentService.getAll(

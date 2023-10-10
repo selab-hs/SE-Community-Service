@@ -6,5 +6,6 @@ import lombok.Getter;
 public class CreateCommentRequest {
 
     private Long boardId;
+    private Long postId;
     private String comment;
 }

@@ -27,6 +27,8 @@ public class Comment extends BaseEntity {
 
     private Long boardId;
 
+    private Long postId;
+
     private String comment;
 
     public void update(UpdateCommentRequest updateCommentRequest){
