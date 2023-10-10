@@ -1,7 +1,6 @@
-package com.hs.selab.comment.domain;
+package com.hs.selab.post.domain;
 
-import com.hs.selab.comment.dto.request.UpdateCommentRequest;
-import com.hs.selab.common.domain.BaseEntity;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,21 +16,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class Comment extends BaseEntity {
+public class PostView {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long memberId;
-
-    private Long boardId;
-
     private Long postId;
 
-    private String comment;
+    @Column(columnDefinition = "bigint default 0")
+    private Long postView;
 
-    public void update(UpdateCommentRequest updateCommentRequest){
-        this.comment = updateCommentRequest.getComment();
+    public void update(){
+        ++this.postView;
     }
 }

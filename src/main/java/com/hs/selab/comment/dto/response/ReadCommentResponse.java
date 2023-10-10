@@ -9,5 +9,6 @@ public class ReadCommentResponse {
     private Long commentId;
     private Long memberId;
     private Long boardId;
+    private Long postId;
     private String comment;
 }
