@@ -80,16 +80,7 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReadAllBoardResponse> getAll(
-        UserDetail userInfo
-    ) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
-        {
-            throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
-            );
-        }
+    public List<ReadAllBoardResponse> getAll() {
         var boards = boardRepository.findAll();
         return converter.convertToReadAllBoardResponse(boards);
     }
