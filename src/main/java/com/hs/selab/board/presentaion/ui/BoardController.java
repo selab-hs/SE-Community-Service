@@ -1,5 +1,6 @@
 package com.hs.selab.board.presentaion.ui;
 
+import com.hs.selab.auth.domain.UserDetail;
 import com.hs.selab.board.application.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,9 +16,10 @@ public class BoardController {
 
     @GetMapping("/list")
     public String boardList(
-        Model model
+        Model model,
+        UserDetail userDetail
     ){
-        var list = boardService.getAll();
+        var list = boardService.getAll(userDetail);
         model.addAttribute("list", list);
         return "board/board_list";
     }
