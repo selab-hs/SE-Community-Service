@@ -57,7 +57,7 @@ public class BoardService {
 
    @Transactional
     public Long create(CreateBoardRequest request, UserDetail userInfo){
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
+        if (!userInfo.getRoleType().equals(RoleType.USER))
         {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
