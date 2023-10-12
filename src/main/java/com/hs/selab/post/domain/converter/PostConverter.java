@@ -7,67 +7,68 @@ import com.hs.selab.post.domain.PostView;
 import com.hs.selab.post.dto.request.CreatePostRequest;
 import com.hs.selab.post.dto.response.ReadAllPostResponse;
 import com.hs.selab.post.dto.response.ReadPostResponse;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class PostConverter {
     public Post convertToPostEntity(CreatePostRequest request, UserDetail userInfo, Long boardId) {
         return Post.builder()
-            .boardId(boardId)
-            .memberId(userInfo.getId())
-            .title(request.getTitle())
-            .content(request.getContent())
-            .build();
+                .boardId(boardId)
+                .memberId(userInfo.getId())
+                .title(request.getTitle())
+                .content(request.getContent())
+                .build();
     }
-    public PostView convertToEventPostView(Long postId, Long boardId){
+
+    public PostView convertToEventPostView(Long postId) {
         return PostView.builder()
-            .postId(postId)
-            .boardId(boardId)
-            .postView(0L)
-            .build();
+                .postId(postId)
+                .postView(0L)
+                .build();
     }
 
 
     public ReadPostResponse convertToReadPostResponse(Post post, Long postView) {
         return ReadPostResponse.builder()
-            .id(post.getId())
-            .boardId(post.getBoardId())
-            .memberId(post.getMemberId())
-            .title(post.getTitle())
-            .content(post.getContent())
-            .view(postView)
-            .build();
+                .id(post.getId())
+                .boardId(post.getBoardId())
+                .memberId(post.getMemberId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .view(postView)
+                .build();
     }
 
     public Page<ReadAllPostResponse> convertToReadAllPostResponse(
-        List<Post> posts,
-        List<PostView> postViews,
-        Pageable pageable
-    ){
+            List<Post> posts,
+            List<PostView> postViews,
+            Pageable pageable
+    ) {
         List<ReadAllPostResponse> result = new ArrayList<>();
-        for(int i =0; i<posts.size();i++){
+        for (int i = 0; i < posts.size(); i++) {
             var post = posts.get(i);
             var postView = postViews.get(i);
 
             result.add(
-                ReadAllPostResponse.builder()
-                    .id(post.getId())
-                    .boardId(post.getBoardId())
-                    .memberId(post.getMemberId())
-                    .title(post.getTitle())
-                    .content(post.getTitle())
-                    .view(postView.getPostView())
-                    .build()
+                    ReadAllPostResponse.builder()
+                            .id(post.getId())
+                            .boardId(post.getBoardId())
+                            .memberId(post.getMemberId())
+                            .title(post.getTitle())
+                            .content(post.getTitle())
+                            .view(postView.getPostView())
+                            .build()
             );
         }
         return ListToPageConverter.convert(
-            result,
-            pageable.getPageNumber(),
-            pageable.getPageSize()
+                result,
+                pageable.getPageNumber(),
+                pageable.getPageSize()
         );
     }
 }

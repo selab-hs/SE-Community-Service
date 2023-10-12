@@ -1,12 +1,10 @@
 package com.hs.selab.post.application;
 
-import static com.hs.selab.error.dto.ErrorMessage.NON_EXISTENT_BOARD_EXCEPTION;
-import static com.hs.selab.error.dto.ErrorMessage.UNAUTHORIZED_ACCESS_EXCEPTION;
-
 import com.hs.selab.auth.domain.UserDetail;
 import com.hs.selab.error.exception.board.NonExistentBoardException;
 import com.hs.selab.error.exception.member.UnauthorizedAccessException;
 import com.hs.selab.member.domain.vo.RoleType;
+import com.hs.selab.post.domain.Post;
 import com.hs.selab.post.domain.converter.PostConverter;
 import com.hs.selab.post.dto.request.CreatePostRequest;
 import com.hs.selab.post.dto.request.UpdatePostRequest;
@@ -23,6 +21,11 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.stream.Collectors;
+
+import static com.hs.selab.error.dto.ErrorMessage.NON_EXISTENT_BOARD_EXCEPTION;
+import static com.hs.selab.error.dto.ErrorMessage.UNAUTHORIZED_ACCESS_EXCEPTION;
+
 @Service
 @RequiredArgsConstructor
 public class PostService {
@@ -33,15 +36,14 @@ public class PostService {
 
     @Transactional
     public Long create(
-        CreatePostRequest request,
-        UserDetail userInfo,
-        Long boardId
-        ) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
-        {
+            CreatePostRequest request,
+            UserDetail userInfo,
+            Long boardId
+    ) {
+        if (!userInfo.getRoleType().equals(RoleType.LAB_USER)) {
             throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
+                    UNAUTHORIZED_ACCESS_EXCEPTION,
+                    "권한이 없는 접근입니다."
             );
         }
         var post = converter.convertToPostEntity(request, userInfo, boardId);
@@ -52,65 +54,62 @@ public class PostService {
 
     @Async
     @Transactional
-    public void createPostView(Long postId, Long boardId){
-        var postView = converter.convertToEventPostView(postId, boardId);
+    public void createPostView(Long postId) {
+        var postView = converter.convertToEventPostView(postId);
         postViewRepository.save(postView);
     }
 
     @Transactional
     public void update(Long postId, UpdatePostRequest request, UserDetail userInfo) {
-        if (!(postRepository.existsByIdAndMemberId(postId, userInfo.getId())))
-        {
+        if (!(postRepository.existsByIdAndMemberId(postId, userInfo.getId()))) {
             throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
+                    UNAUTHORIZED_ACCESS_EXCEPTION,
+                    "권한이 없는 접근입니다."
             );
         }
         var post = postRepository.findById(postId)
-            .orElseThrow(() -> new NonExistentBoardException(
-                    NON_EXISTENT_BOARD_EXCEPTION,
-                    "업데이트 단일 게시판 조회 실패"
-                )
-            );
+                .orElseThrow(() -> new NonExistentBoardException(
+                                NON_EXISTENT_BOARD_EXCEPTION,
+                                "업데이트 단일 게시판 조회 실패"
+                        )
+                );
         post.update(request);
         postRepository.save(post);
     }
 
     @Transactional(readOnly = true)
     public ReadPostResponse get(
-        Long postId,
-        UserDetail userInfo
+            Long postId,
+            UserDetail userInfo
     ) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
-        {
+        if (!userInfo.getRoleType().equals(RoleType.LAB_USER)) {
             throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
+                    UNAUTHORIZED_ACCESS_EXCEPTION,
+                    "권한이 없는 접근입니다."
             );
         }
 
         return converter.convertToReadPostResponse
-            (
-                postRepository.findById(postId)
-                    .orElseThrow(
-                        () -> new NonExistentBoardException(
-                            NON_EXISTENT_BOARD_EXCEPTION,
-                            "단일 게시판 조회 실패")),
-                postViewRepository.findByPostId(postId)
-                    .orElseThrow(() -> new NonExistentBoardException(
-                        NON_EXISTENT_BOARD_EXCEPTION,
-                        "업데이트 단일 게시판 조회 실패"))
-                    .getPostView()
-            );
+                (
+                        postRepository.findById(postId)
+                                .orElseThrow(
+                                        () -> new NonExistentBoardException(
+                                                NON_EXISTENT_BOARD_EXCEPTION,
+                                                "단일 게시판 조회 실패")),
+                        postViewRepository.findByPostId(postId)
+                                .orElseThrow(() -> new NonExistentBoardException(
+                                        NON_EXISTENT_BOARD_EXCEPTION,
+                                        "업데이트 단일 게시판 조회 실패"))
+                                .getPostView()
+                );
     }
 
     @Transactional(readOnly = true)
-    public Page<ReadAllPostResponse> getAll(Pageable pageable,Long boardId) {
-        return converter.convertToReadAllPostResponse(
-            postRepository.findAllByBoardId(boardId),
-            postViewRepository.findAllByBoardId(boardId),
-            pageable
-        );
+    public Page<ReadAllPostResponse> getAll(Pageable pageable, Long boardId) {
+        var posts = postRepository.findAllByBoardId(boardId);
+        var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
+
+        return converter.convertToReadAllPostResponse(posts, postViewRepository.findAllById(postIds), pageable);
     }
 
 
@@ -121,11 +120,10 @@ public class PostService {
 
     @Transactional
     public void delete(Long postId, UserDetail userInfo) {
-        if (!postRepository.existsByIdAndMemberId(postId, userInfo.getId()))
-        {
+        if (!postRepository.existsByIdAndMemberId(postId, userInfo.getId())) {
             throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
+                    UNAUTHORIZED_ACCESS_EXCEPTION,
+                    "권한이 없는 접근입니다."
             );
         }
         postRepository.deleteById(postId);
