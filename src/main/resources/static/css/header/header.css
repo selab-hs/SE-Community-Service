@@ -57,6 +57,7 @@
     font-size: 30px;
     text-align: center;
     margin-bottom: 4px;
+    text-decoration: none;
 }
 
 .navbar :hover{
@@ -73,21 +74,26 @@
     white-space: nowrap;
 }
 
-.header-toolbar a{
+.header-toolbar span a {
     text-decoration: none;
+    cursor: pointer;
     color: rgb(168, 163, 163);
 }
 
-.header-toolbar a:hover{
+.header-toolbar span a:hover {
     transition: 0.2s;
     color: rgb(44, 44, 44);
 }
 
-.blank-space{
+#exist_token {
+    display: none;
+}
+
+.blank-space {
     height: 50px;
 }
 
-@media screen and (max-width:1600px){
+@media screen and (max-width:1600px) {
     .header{
         width: 1200px;
         height: auto;
