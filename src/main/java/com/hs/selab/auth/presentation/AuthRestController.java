@@ -1,7 +1,9 @@
 package com.hs.selab.auth.presentation;
 
 import com.hs.selab.auth.application.AuthService;
+import com.hs.selab.auth.domain.UserDetail;
 import com.hs.selab.auth.dto.request.JoinRequest;
+import com.hs.selab.auth.infrastructure.annotation.AuthMember;
 import com.hs.selab.common.response.dto.ResponseDto;
 import com.hs.selab.common.response.dto.ResponseMessage;
 import lombok.RequiredArgsConstructor;
@@ -22,5 +24,10 @@ public class AuthRestController {
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_LOAD_MEMBER_INFORMATION, userDetail);
     }
 
+    @GetMapping("/info")
+    public ResponseEntity<?> getInformation(@AuthMember UserDetail detail) {
+        authService.parsingObjectNullCheck(detail);
 
+        return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_USER_INFO_FETCH, detail);
+    }
 }
