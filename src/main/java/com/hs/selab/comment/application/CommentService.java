@@ -26,7 +26,7 @@ public class CommentService {
 
     @Transactional
     public void create(CreateCommentRequest request, UserDetail userInfo) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER)) {
+        if (!userInfo.getRoleType().equals(RoleType.USER)) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
@@ -53,7 +53,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public List<ReadCommentResponse> getAll(ReadCommentRequest request, UserDetail userInfo) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER)) {
+        if (!userInfo.getRoleType().equals(RoleType.USER)) {
             throw new UnauthorizedAccessException(
                 UNAUTHORIZED_ACCESS_EXCEPTION,
                 "권한이 없는 접근입니다."
