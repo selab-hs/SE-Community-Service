@@ -93,3 +93,27 @@
 			});
 
 })(jQuery);
+
+function clear_localStorage() {
+	window.localStorage.clear();
+	location.reload();
+}
+
+$(document).ready(function() {
+	// 로컬 스토리지에서 토큰 가져오기
+	const token = localStorage.getItem('X-SELAB-AUTH-TOKEN');
+
+	if (token) {
+		// 토큰이 있을 때
+		$("#login_button").hide(); // Log In 버튼 숨기기
+		$("#sign_up_button").hide(); // Log In 버튼 숨기기
+		$("#logout_button").show(); // Log Out 버튼 표시
+		$("#edit_button").show();   // Edit 버튼 표시
+	} else {
+		// 토큰이 없을 때
+		$("#login_button").show(); // Log In 버튼 숨기기
+		$("#sign_up_button").show(); // Log In 버튼 숨기기
+		$("#logout_button").hide(); // Log Out 버튼 표시
+		$("#edit_button").hide();   // Edit 버튼 표시
+	}
+});
