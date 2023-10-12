@@ -29,7 +29,7 @@ public class BoardRestController {
 
     private final BoardService boardService;
 
-    @GetMapping
+/*    @GetMapping
     public ResponseEntity<?> getAllBoards(
         @AuthMember UserDetail userInfo
     ) {
@@ -92,5 +92,5 @@ public class BoardRestController {
             ResponseMessage.DELETE_SUCCESS_BOARD,
             HttpStatus.OK
         );
-    }
+    }*/
 }

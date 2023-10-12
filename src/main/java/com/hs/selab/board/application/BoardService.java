@@ -55,7 +55,7 @@ public class BoardService {
         return new ArrayList<>(boardModels.values());
     }
 
-    @Transactional
+/*    @Transactional
     public Long create(CreateBoardRequest request, UserDetail userInfo){
         if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
         {
@@ -135,5 +135,5 @@ public class BoardService {
             );
         }
         boardRepository.deleteById(boardId);
-    }
+    }*/
 }

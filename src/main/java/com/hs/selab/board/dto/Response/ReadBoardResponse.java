@@ -6,7 +6,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class ReadBoardResponse {
-        private Long id;
-        private String title;
-        private String content;
+    private Long id;
+    private String name;
+    private String description;
 }

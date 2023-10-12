@@ -16,10 +16,10 @@ public class BoardController {
 
     @GetMapping("/list")
     public String boardList(
-        Model model,
-        UserDetail userDetail
-    ){
-        var list = boardService.getAll(userDetail);
+            Model model,
+            UserDetail userDetail
+    ) {
+        var list = boardService.getAll();
         model.addAttribute("list", list);
         return "board/board_list";
     }
