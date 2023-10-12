@@ -6,6 +6,7 @@ import com.hs.selab.auth.token.TokenProvider;
 import com.hs.selab.error.dto.ErrorMessage;
 import com.hs.selab.error.exception.member.InvalidPasswordMatchException;
 import com.hs.selab.error.exception.member.NotExistMemberException;
+import com.hs.selab.error.exception.member.NotExistUserInfoException;
 import com.hs.selab.member.domain.vo.Email;
 import com.hs.selab.member.infrastructure.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +51,12 @@ public class AuthService {
         }
 
         return tokenProvider.generateJwtToken(member.getId(), member.getRoleType().getRole());
+    }
+
+    public void parsingObjectNullCheck(UserDetail detail) {
+        if(detail == null) {
+            throw new NotExistUserInfoException(ErrorMessage.NOT_EXIST_MEMBER_EXCEPTION, "파싱된 유저 정보가 존재하지 않습니다.");
+        }
     }
 
 }

@@ -34,6 +34,7 @@ function email_duplication_check() {
     const email = $("#email_input");
     if(!email_boolean) {
         alert("유효하지 않은 이메일 형식입니다");
+        return;
     }
 
     $.ajax({
@@ -112,27 +113,35 @@ const maxLength = (e) =>{
     }
 }
 
-document.getElementById("email_input").addEventListener("blur", function() {
-    email_check();
+document.addEventListener("DOMContentLoaded", function() {
+    if (window.localStorage.getItem('X-SELAB-AUTH-TOKEN') != null) {
+        alert('유저 정보가 이미 존재합니다.');
+        // 여기에 로컬 스토리지 토큰 삭제 추가
+        location.href = "http://localhost:8080/home";
+    }
+
+    document.getElementById("email_input").addEventListener("blur", function() {
+        email_check();
+    });
+
+    document.getElementById("password_input").addEventListener("blur", function() {
+        pwd_check();
+    });
+
+    document.getElementById("password_check_input").addEventListener("blur", function() {
+        pwd_check2();
+    });
+
+    document.getElementById("name_input").addEventListener("blur", function() {
+        name_check();
+    });
+
+    document.getElementById("student_id_input").addEventListener("blur", function() {
+        student_id_check();
+    });
 });
 
-document.getElementById("password_input").addEventListener("blur", function() {
-    pwd_check();
-});
-
-document.getElementById("password_check_input").addEventListener("blur", function() {
-    pwd_check2();
-});
-
-document.getElementById("name_input").addEventListener("blur", function() {
-    name_check();
-});
-
-document.getElementById("student_id_input").addEventListener("blur", function() {
-    student_id_check();
-});
-
-function sing_up_submit() {
+function sign_up_submit() {
     if(email_duplication_boolean && password_boolean && password_check_boolean
         && name_boolean && student_boolean) {
         let data = JSON.stringify({
@@ -157,7 +166,7 @@ function sing_up_submit() {
             }
         })
     } else {
-        alert("회원가입 기입이 잘못되었거나 작성되지 않았습니다.");
+        alert("회원가입 정보가 올바르지 않습니다.");
         return false;
     }
 }

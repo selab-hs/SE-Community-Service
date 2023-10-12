@@ -12,13 +12,14 @@
         </div>
 
         <div class='navbar'>
-            <a class='navi-item'><div>Home</div></a>
+            <a class='navi-item' href="http://localhost:8080/home"><div>Home</div></a>
             <a class='navi-item'><div>Support</div></a>
-            <a class='navi-item'><div>Board</div></a>
+            <a class='navi-item' href="http://localhost:8080/boards"><div>Board</div></a>
         </div>
 
         <div class='header-toolbar'>
-            <a >Login</a> | <a >Join</a> | <a >Mypage</a>
+            <span id="not_exist_token"><a href="http://localhost:8080/login">Login</a> | <a href="http://localhost:8080/sign-up">Join</a></span>
+            <span id="exist_token"><a onclick="clear_token()">Logout</a> | <a href="http://localhost:8080/edit">Edit</a></span>
         </div>
     </div>
 

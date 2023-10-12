@@ -40,7 +40,7 @@ public class MemberService {
     }
 
     @Transactional
-    public MemberResponse updateMember(UserDetail detail, UpdateMemberRequest request) {
+    public MemberResponse editMember(UserDetail detail, UpdateMemberRequest request) {
         loginCheckException(detail);
         var member = findByIdFromLogin(detail.getId());
         member.updateMember(request);
@@ -64,9 +64,10 @@ public class MemberService {
                 .orElseThrow(() -> new InvalidLoginInfoException(ErrorMessage.INVALID_LOGIN_USER_INFORMATION_EXCEPTION, "잘못된 유저 로그인 정보입니다"));
     }
 
-    private void loginCheckException(UserDetail detail) {
+    public void loginCheckException(UserDetail detail) {
         if(detail.getRoleType() == RoleType.GUEST) {
             throw new LoginTokenNullException(ErrorMessage.NOT_LOGIN_USER_EXCEPTION, "로그인 정보가 없습니다");
         }
     }
+
 }
