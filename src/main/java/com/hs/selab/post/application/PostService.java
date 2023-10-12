@@ -5,6 +5,7 @@ import com.hs.selab.error.exception.board.NonExistentBoardException;
 import com.hs.selab.error.exception.member.UnauthorizedAccessException;
 import com.hs.selab.member.domain.vo.RoleType;
 import com.hs.selab.post.domain.Post;
+import com.hs.selab.post.domain.PostView;
 import com.hs.selab.post.domain.converter.PostConverter;
 import com.hs.selab.post.dto.request.CreatePostRequest;
 import com.hs.selab.post.dto.request.UpdatePostRequest;
@@ -21,6 +22,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import static com.hs.selab.error.dto.ErrorMessage.NON_EXISTENT_BOARD_EXCEPTION;
@@ -106,10 +108,14 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public Page<ReadAllPostResponse> getAll(Pageable pageable, Long boardId) {
-        var posts = postRepository.findAllByBoardId(boardId);
+        var posts = postRepository.findAllByBoardId(boardId, pageable);
         var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
 
-        return converter.convertToReadAllPostResponse(posts, postViewRepository.findAllById(postIds), pageable);
+        var postViews = postViewRepository.findAllById(postIds)
+                .stream()
+                .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
+
+        return converter.convertToReadAllPostResponse(posts, postViews);
     }
 
 
