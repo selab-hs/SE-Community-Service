@@ -55,7 +55,7 @@ public class BoardService {
         return new ArrayList<>(boardModels.values());
     }
 
-   @Transactional
+/*   @Transactional
     public Long create(CreateBoardRequest request, UserDetail userInfo){
         if (!userInfo.getRoleType().equals(RoleType.USER))
         {
@@ -68,7 +68,7 @@ public class BoardService {
         boardRepository.save(board);
 
         return board.getId();
-    }
+    }*/
 
 //    @Transactional
 //    public void update(UpdateBoardRequest request, Long boardId, UserDetail userInfo){
