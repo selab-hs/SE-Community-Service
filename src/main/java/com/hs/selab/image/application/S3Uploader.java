@@ -39,6 +39,7 @@ public class S3Uploader {
                 );
         String uploadImageUrl = upload(uploadFile, bundle.getDirectoryName());
 
+
         return new UploadResponse(uploadImageUrl);
     }
 
