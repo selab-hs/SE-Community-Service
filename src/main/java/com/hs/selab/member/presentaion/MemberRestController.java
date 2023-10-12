@@ -42,10 +42,10 @@ public class MemberRestController {
         return ResponseDto.toResponseEntity(ResponseMessage.CREATE_SUCCESS_MEMBER, response);
     }
 
-    @PatchMapping("/change")
-    public ResponseEntity<?> updateMember(@AuthMember UserDetail detail
+    @PatchMapping("/edit")
+    public ResponseEntity<?> editMember(@AuthMember UserDetail detail
             , @RequestBody @Valid UpdateMemberRequest request) {
-        var response = memberService.updateMember(detail, request);
+        var response = memberService.editMember(detail, request);
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_UPDATE_MEMBER, response);
     }
@@ -59,5 +59,4 @@ public class MemberRestController {
 
         return ResponseDto.toResponseEntity(ResponseMessage.SUCCESS_SEARCH_ALL_MEMBER, response);
     }
-
 }
