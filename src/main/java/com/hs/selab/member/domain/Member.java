@@ -41,6 +41,10 @@ public class Member extends BaseEntity {
     @Enumerated
     private RoleType roleType;
 
+    @Column
+    @Enumerated
+    private MemberState state;
+
     @Builder
     public Member(String email, String password, String name,
                   Long grade, String studentId){
@@ -49,7 +53,8 @@ public class Member extends BaseEntity {
         this.name = new Name(name);
         this.grade = grade;
         this.studentId = new StudentId(studentId);
-        this.roleType = RoleType.LAB_USER;
+        this.state = MemberState.ENROLLED;
+        this.roleType = RoleType.USER;
     }
 
     public MemberResponse toResponseDto(){
@@ -59,6 +64,7 @@ public class Member extends BaseEntity {
                 .name(name.getName())
                 .grade(grade)
                 .studentId(studentId.getStudentId())
+                .state(this.state)
                 .roleType(roleType)
                 .build();
     }
