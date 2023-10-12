@@ -53,7 +53,7 @@ public class BoardRestController {
             board
         );
     }
-
+*/
     @PostMapping
     public ResponseEntity<?> createBoard(
         @RequestBody CreateBoardRequest request,
@@ -66,7 +66,7 @@ public class BoardRestController {
             boardId
         );
     }
-
+/*
     @PatchMapping("{id}")
     public ResponseEntity<?> updateBoards(
         @PathVariable("id") Long id,
