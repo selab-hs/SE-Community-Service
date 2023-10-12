@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<th:block th:fragment="scriptFragment">
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/browser.min.js"></script>
+  <script src="assets/js/breakpoints.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    /* 에디터 설정 */
+    let oEditors = [];
+
+    smartEditor = function () {
+      console.log("Naver SmartEditor")
+      nhn.husky.EZCreator.createInIFrame({
+        oAppRef: oEditors,
+        elPlaceHolder: "editorTxt",
+        sSkinURI: "/smarteditor/SmartEditor2Skin.html",
+        fCreator: "createSEditor2"
+      })
+    }
+
+    $(document).ready(function () {
+      smartEditor()
+    })
+  </script>
+  <script>
+    submitPost = function() {
+      oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
+      let content = document.getElementById("editorTxt").value
+
+      //if(content == '') {
+      if(content == '<p>&nbsp;</p>') { //비어있어도 기본 P태그가 붙더라.
+        alert("내용을 입력해주세요.")
+        oEditors.getById["editorTxt"].exec("FOCUS")
+        return
+      } else {
+        console.log(content)
+      }
+    }
+
+  </script>
+
+</th:block>
+</html>

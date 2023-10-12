@@ -55,7 +55,7 @@ public class BoardService {
         return new ArrayList<>(boardModels.values());
     }
 
-/*    @Transactional
+   @Transactional
     public Long create(CreateBoardRequest request, UserDetail userInfo){
         if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
         {
@@ -70,70 +70,70 @@ public class BoardService {
         return board.getId();
     }
 
-    @Transactional
-    public void update(UpdateBoardRequest request, Long boardId, UserDetail userInfo){
-        if (!boardRepository.existsByIdAndMemberId(boardId, userInfo.getId()))
-        {
-            throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
-            );
-        }
-
-        var board = boardRepository.findById(boardId).orElseThrow(
-            () -> new NonExistentBoardException(
-                NON_EXISTENT_BOARD_EXCEPTION, "업데이트 단일 게시판 조회 실패")
-        );
-        board.update(request);
-        boardRepository.save(board);
-    }
-
-
-    @Transactional(readOnly = true)
-    public ReadBoardResponse get(
-        Long boardId,
-        UserDetail userInfo
-    ) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
-        {
-            throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
-            );
-        }
-
-        var board = boardRepository.findById(boardId).orElseThrow(
-            () -> new NonExistentBoardException(
-                NON_EXISTENT_BOARD_EXCEPTION, "업데이트 단일 게시판 조회 실패")
-        );
-
-        return converter.convertToReadBoardResponse(board);
-    }
-
-    @Transactional(readOnly = true)
-    public List<ReadAllBoardResponse> getAll(
-        UserDetail userInfo
-    ) {
-        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
-        {
-            throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
-            );
-        }
-        var boards = boardRepository.findAll();
-        return converter.convertToReadAllBoardResponse(boards);
-    }
-
-    @Transactional
-    public void delete(Long boardId, UserDetail userInfo) {
-        if (!boardRepository.existsByIdAndMemberId(boardId, userInfo.getId()))
-        {
-            throw new UnauthorizedAccessException(
-                UNAUTHORIZED_ACCESS_EXCEPTION,
-                "권한이 없는 접근입니다."
-            );
-        }
-        boardRepository.deleteById(boardId);
-    }*/
+//    @Transactional
+//    public void update(UpdateBoardRequest request, Long boardId, UserDetail userInfo){
+//        if (!boardRepository.existsByIdAndMemberId(boardId, userInfo.getId()))
+//        {
+//            throw new UnauthorizedAccessException(
+//                UNAUTHORIZED_ACCESS_EXCEPTION,
+//                "권한이 없는 접근입니다."
+//            );
+//        }
+//
+//        var board = boardRepository.findById(boardId).orElseThrow(
+//            () -> new NonExistentBoardException(
+//                NON_EXISTENT_BOARD_EXCEPTION, "업데이트 단일 게시판 조회 실패")
+//        );
+//        board.update(request);
+//        boardRepository.save(board);
+//    }
+//
+//
+//    @Transactional(readOnly = true)
+//    public ReadBoardResponse get(
+//        Long boardId,
+//        UserDetail userInfo
+//    ) {
+//        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
+//        {
+//            throw new UnauthorizedAccessException(
+//                UNAUTHORIZED_ACCESS_EXCEPTION,
+//                "권한이 없는 접근입니다."
+//            );
+//        }
+//
+//        var board = boardRepository.findById(boardId).orElseThrow(
+//            () -> new NonExistentBoardException(
+//                NON_EXISTENT_BOARD_EXCEPTION, "업데이트 단일 게시판 조회 실패")
+//        );
+//
+//        return converter.convertToReadBoardResponse(board);
+//    }
+//
+//    @Transactional(readOnly = true)
+//    public List<ReadAllBoardResponse> getAll(
+//        UserDetail userInfo
+//    ) {
+//        if (!userInfo.getRoleType().equals(RoleType.LAB_USER))
+//        {
+//            throw new UnauthorizedAccessException(
+//                UNAUTHORIZED_ACCESS_EXCEPTION,
+//                "권한이 없는 접근입니다."
+//            );
+//        }
+//        var boards = boardRepository.findAll();
+//        return converter.convertToReadAllBoardResponse(boards);
+//    }
+//
+//    @Transactional
+//    public void delete(Long boardId, UserDetail userInfo) {
+//        if (!boardRepository.existsByIdAndMemberId(boardId, userInfo.getId()))
+//        {
+//            throw new UnauthorizedAccessException(
+//                UNAUTHORIZED_ACCESS_EXCEPTION,
+//                "권한이 없는 접근입니다."
+//            );
+//        }
+//        boardRepository.deleteById(boardId);
+//    }
 }

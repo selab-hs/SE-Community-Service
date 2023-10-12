@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html lang="ko-kr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/new-post-layout}">
+<th:block layout:fragment="content">
+  <div id="my-element">
+
+    <h3>게시판 작성</h3>
+
+    <div class="col-6 col-12-xsmall">
+      <h3>제목</h3>
+      <input type="text" name="demo-name" id="demo-name" value="" placeholder="제목을 입력해 주세요." />
+      <br/>
+    </div>
+
+    <div class="col-12">
+      <h3>카테고리</h3>
+      <select name="demo-category" id="demo-category" >
+        <option value="">- Category -</option>
+        <option th:each="board:${boards}"
+                th:value="${board.getId()}" th:utext="${board.getName()}">[[${board.getName()}]]</option>
+      </select>
+      <br/>
+    </div>
+
+    <h3>내용</h3>
+    <form action="insertStudentInfoForm" method="post">
+      <div>
+        <textarea name="editorTxt" id="editorTxt"
+                  rows="20" cols="10"
+                  placeholder="내용을 입력해주세요"
+                  style="width: 500px"></textarea>
+      </div>
+      <input type="button" value="내용콘솔에" onclick="submitPost()"/>
+    </form>
+  </div>
+</th:block>
+</html>
