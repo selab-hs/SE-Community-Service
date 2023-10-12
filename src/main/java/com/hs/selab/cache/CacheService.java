@@ -1,64 +1,29 @@
 package com.hs.selab.cache;
 
-import com.hs.selab.common.util.MapperUtil;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
-import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.lang.Nullable;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 
-@Service
-@RequiredArgsConstructor
-public class CacheService {
-    private final StringRedisTemplate redisTemplate;
+public interface CacheService {
+    @Nullable
+    <T> T getOrNull(Cache<T> cache);
 
-    public <T> T getOrNull(Cache<T> cache) {
-        var data = redisTemplate.opsForValue().get(cache.getKey());
-        return (data != null) ? MapperUtil.readValue(data, cache.getType()) : null;
-    }
+    <T> T get(Cache<T> cache, Callable<T> callable);
 
-    @SneakyThrows
-    public <T> T get(Cache<T> cache, Callable<T> callable) {
-        var data = redisTemplate.opsForValue().get(cache.getKey());
+    <T> void set(Cache<T> cache, T data);
 
-        if (data == null) {
-            var dataObject = callable.call();
+    <T> Long increment(Cache<T> cache);
 
-            asyncSet(cache, dataObject);
+    <T> Long decrement(Cache<T> cache);
 
-            return dataObject;
-        } else {
-            return MapperUtil.readValue(data, cache.getType());
-        }
-    }
+    <T> void delete(Cache<T> cache);
 
-    public <T> void set(Cache<T> cache, T data) {
-        redisTemplate.opsForValue().set(
-                cache.getKey(),
-                MapperUtil.writeValueAsString(data),
-                cache.getDuration()
-        );
-    }
-
-    public <T> void asyncSet(Cache<T> cache, T data) {
+    default <T> void asyncSet(Cache<T> cache, T data) {
         CompletableFuture.runAsync(() -> set(cache, data));
     }
 
-    public <T> void delete(Cache<T> cache) {
-        redisTemplate.delete(cache.getKey());
-    }
-
-    public <T> void asyncDelete(Cache<T> cache) {
+    default <T> void asyncDelete(Cache<T> cache) {
         CompletableFuture.runAsync(() -> delete(cache));
-    }
-
-    public <T> Long increment(Cache<T> cache) {
-        return redisTemplate.opsForValue().increment(cache.getKey());
-    }
-
-    public <T> Long decrement(Cache<T> cache) {
-        return redisTemplate.opsForValue().decrement(cache.getKey());
     }
 }
