@@ -3,6 +3,7 @@ package com.hs.selab.board.presentaion.ui;
 import com.hs.selab.board.application.BoardService;
 import com.hs.selab.post.application.PostService;
 import java.util.ArrayList;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -26,7 +27,6 @@ public class BoardController {
         var post = new ArrayList<>();
         var postsB = postService.getAll(pageable, list.get(1).getId());
         var postsA = postService.getAll(pageable, list.get(0).getId());
-
         post.add(postsA);
         post.add(postsB);
 
