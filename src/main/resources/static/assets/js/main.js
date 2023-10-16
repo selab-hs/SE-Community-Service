@@ -116,4 +116,36 @@ $(document).ready(function() {
 		$("#logout_button").hide(); // Log Out 버튼 표시
 		$("#edit_button").hide();   // Edit 버튼 표시
 	}
+
+	$.ajax({
+		url: 'http://localhost:8080/api/v1/boards/category',
+		method: 'GET',
+		contentType: 'application/json',
+		success: function (result) {
+			const ul = $('.links ul');
+			const ul2 = $('section .links');
+
+			result.data.forEach(function (item) {
+				const li = document.createElement('li');
+				const a = document.createElement('a');
+				a.setAttribute('href', 'http://localhost:8080/boards/' + item.id);
+				a.textContent = item.name;
+				li.append(a);
+				ul.append(li);
+
+				const li2 = document.createElement('li');
+				const a2 = document.createElement('a');
+				a2.setAttribute('href', 'http://localhost:8080/boards/' + item.id);
+				const h3 = document.createElement('h3');
+				h3.textContent = item.name;
+				const p = document.createElement('p');
+				p.textContent = item.description;
+
+				a2.append(h3);
+				a2.append(p);
+				li2.append(a2);
+				ul2.append(li2);
+			});
+		}
+	});
 });
