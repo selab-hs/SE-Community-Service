@@ -9,7 +9,7 @@
 
     <div class="col-6 col-12-xsmall">
       <h3>제목</h3>
-      <input type="text" name="demo-name" id="demo-name" value="" placeholder="제목을 입력해 주세요." />
+      <input type="text" name="demo-name" id="title" value="" placeholder="제목을 입력해 주세요." />
       <br/>
     </div>
 
@@ -17,7 +17,7 @@
       <h3>카테고리</h3>
       <select name="demo-category" id="demo-category" >
         <option value="">- Category -</option>
-        <option th:each="board:${boards}"
+        <option id="type" th:each="board:${boards}"
                 th:value="${board.getId()}" th:utext="${board.getName()}">[[${board.getName()}]]</option>
       </select>
       <br/>
@@ -31,7 +31,7 @@
                   placeholder="내용을 입력해주세요"
                   style="width: 500px"></textarea>
       </div>
-      <input type="button" value="내용콘솔에" onclick="submitPost()"/>
+      <input type="button" value="저장" onclick="create_post_submit()"/>
     </form>
   </div>
 </th:block>
