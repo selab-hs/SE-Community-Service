@@ -54,7 +54,7 @@ public class BoardRestController {
         );
     }
 */
-    @PostMapping
+/*    @PostMapping
     public ResponseEntity<?> createBoard(
         @RequestBody CreateBoardRequest request,
         @AuthMember UserDetail userInfo
@@ -65,7 +65,7 @@ public class BoardRestController {
             ResponseMessage.CREATE_SUCCESS_BOARD,
             boardId
         );
-    }
+    }*/
 /*
     @PatchMapping("{id}")
     public ResponseEntity<?> updateBoards(
