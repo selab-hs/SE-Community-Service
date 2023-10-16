@@ -29,6 +29,14 @@ public class BoardRestController {
 
     private final BoardService boardService;
 
+    @GetMapping("/category")
+    public ResponseEntity<?> getBoardCategory() {
+        return ResponseDto.toResponseEntity(
+                ResponseMessage.READ_SUCCESS_BOARD_CATEGORY,
+                boardService.getAll()
+        );
+    }
+
 /*    @GetMapping
     public ResponseEntity<?> getAllBoards(
         @AuthMember UserDetail userInfo

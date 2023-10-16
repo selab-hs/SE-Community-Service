@@ -20,7 +20,7 @@ function login_submit() {
         success: function(result) {
             alert("로그인 성공!");
             window.localStorage.setItem("X-SELAB-AUTH-TOKEN", result.data);
-            location.href = "http://localhost:8080/home";
+            location.href = "http://localhost:8080/boards";
         },
         error: function(request){
             if(request.status === 400) {
