@@ -3449,6 +3449,16 @@ input, select, textarea {
 		font-size: 0.8em;
 	}
 
+	ul.actions.pagination {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	ul.actions.pagination .write-post {
+		margin-left: auto;
+	}
+
 	@media screen and (max-width: 1280px) {
 
 		#intro {
