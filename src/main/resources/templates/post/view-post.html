@@ -4,61 +4,39 @@
       layout:decorate="~{layout/view-post-layout}">
 <th:block layout:fragment="content">
   <div id="my-element">
-    <h3>게시판 작성</h3>
-
-    <div class="col-6 col-12-xsmall">
-      <span>
-        <label for="post_title"></label>
-        <input type='text' id="post_title" readonly/>
-      </span>
-
-      <br/>
-    </div>
-
-    <div class="col-12">
-      <h3>카테고리</h3>
-
-      <br/>
-    </div>
+    <section >
+    <h1 id="post_title"></h1>
+    <br/>
+      <h2 id="post-writer"></h2>
 
     <h3>내용</h3>
-    <span>
-      <label for="post_content"></label>
-        <input type='text' rows=20 id="post_content" readonly/>
-      <!--        contenteditable="true"-->
-      </span>
 
+       <div class="col-12">
+         <textarea name="demo-message" id="post_content"
+                   rows="20" readonly ></textarea>
+       </div>
+      <br/>
+      <hr>
+    </section>
 
-    <br/>
-    <hr>
     <section>
       <section>
 
         <h2>댓글</h2>
 
         <div class="col-12">
-          <textarea name="demo-message" id="demo-message" placeholder="댓글을 작성해주세요."
-                    rows="6"></textarea>
+          <textarea name="demo-message" id="comment-message" placeholder="댓글을 작성해주세요."
+                    rows="6" ></textarea>
         </div>
         <div class="col-12">
           <ul class="actions">
-            <li><input type="submit" value="저장"/></li>
+            <li><input type="submit" onclick="create_comment_submit()" value="저장"/></li>
           </ul>
         </div>
       </section>
 
-      <section>
-        <ul class="posts">
-          <li>
-            <article>
-              <header>
-                <h3 id="comment_member_id">Lorem ipsum fermentum ut nisl vitae</h3>
-                <p class="published"  id="comment_content">October 20, 2015</p>
-              </header>
-              <a href="page/single.html" class="image"><img src="/images/pic08.jpg" alt=""/></a>
-            </article>
-          </li>
-        </ul>
+      <section >
+        <div id="comments"></div>
       </section>
     </section>
   </div>
