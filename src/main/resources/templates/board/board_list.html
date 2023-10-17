@@ -22,10 +22,10 @@
 <!--        <div id="post_id" th:value="${@post.getId()}">-->
         <div class="meta">
           <time class="published" datetime="2015-11-01">November 1, 2015</time>
-          <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+          <a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/avatar.jpg" alt="" /></a>
         </div>
       </header>
-      <a href="page/single.html" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+      <a href="/page/single.html" class="image featured"><img src="/images/pic01.jpg" alt="" /></a>
       <footer>
         <ul class="actions">
           <li><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="button large">Continue Reading</a></li>
@@ -53,9 +53,9 @@
 
     <!-- Intro -->
     <section id="intro">
-      <a href="http://localhost:8080/boards/1" class="logo"><img src="images/se-lab.png" alt="" /></a>
+      <a href="http://localhost:8080/boards/1" class="logo"><img src="/images/se-lab.png" alt="" /></a>
       <header>
-        <h2 class="se-h2">SE COMMUNITY NOTICE</h2>
+        <h2>SE COMMUNITY NOTICE</h2>
         <p>HANSHIN UNIVERSITY SOFTWARE ENGINEERING LABORATORY <a href="http://localhost:8080/boards/1">NOTICE</a></p>
       </header>
     </section>
@@ -69,17 +69,14 @@
           <header>
             <h3><a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}">[[${postA.getTitle()}]]</a></h3>
             <time class="published" datetime="2015-10-20">October 20, 2015</time>
-            <a href="#" class="author"><img src="images/avatar.jpg" alt="" /></a>
+            <a href="#" class="author"><img src="/images/avatar.jpg" alt="" /></a>
           </header>
-          <a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}" class="image"><img src="images/pic04.jpg" alt="" /></a>
+          <a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}" class="image"><img src="/images/pic04.jpg" alt="" /></a>
         </article>
 
       </div>
 
-
     </section>
-
-
 
     <!-- About -->
     <section class="blurb">
