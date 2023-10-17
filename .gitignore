@@ -36,4 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-**/src/resource/config
+**/src/resource/config/
