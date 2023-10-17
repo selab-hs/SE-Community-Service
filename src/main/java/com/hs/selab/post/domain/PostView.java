@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Table(name = "post_view")
 @Entity
 @Getter
 @Builder
@@ -25,7 +27,7 @@ public class PostView {
     @Column(name = "post_id")
     private Long postId;
 
-    @Column(columnDefinition = "bigint default 0")
+    @Column(name = "post_view", columnDefinition = "bigint default 0")
     private Long postView;
 
     public void update() {
