@@ -31,6 +31,16 @@ public class PostController {
         return "post/view-post";
     }
 
+    @GetMapping("/updatePost/{id}")
+    public String updatePost(@PathVariable("id") Long id,
+        Model model) {
+
+        var boards =boardService.getAll();
+        model.addAttribute("boardId", id);
+        model.addAttribute("boards", boards);
+        return "post/update-post";
+    }
+
     @GetMapping("/view/{id}")
     public String view(
         @PathVariable("id") Long id,
@@ -42,8 +52,4 @@ public class PostController {
 
         return "post/view-post";
     }
-
-
-
 }
-

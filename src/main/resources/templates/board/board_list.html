@@ -1,9 +1,4 @@
 <!DOCTYPE HTML>
-<!--
-	Future Imperfect by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html lang="ko-kr" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout}">
@@ -22,10 +17,10 @@
 <!--        <div id="post_id" th:value="${@post.getId()}">-->
         <div class="meta">
           <time class="published" datetime="2015-11-01">November 1, 2015</time>
-          <a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/avatar.jpg" alt="" /></a>
+          <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
         </div>
       </header>
-      <a href="/page/single.html" class="image featured"><img src="/images/pic01.jpg" alt="" /></a>
+      <a href="page/single.html" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
       <footer>
         <ul class="actions">
           <li><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="button large">Continue Reading</a></li>
@@ -46,6 +41,34 @@
       <li class="write-post"><a href="/posts" class="button large">Write Post</a></li>
     </ul>
 
+    <div th:if="${!posts.get(1).isEmpty()}">
+      <ul class="actions pagination"
+          th:with="
+            pageNumber = ${posts.get(1).pageable.pageNumber},
+            pageSize = ${posts.get(1).pageable.pageSize},
+            totalPages = ${posts.get(1).totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+        <li th:classappend="${posts.get(1).first} ? 'disabled'" class="page-item">
+          <a class="disabled button large previous" th:href="${posts.get(1).first} ? '#' : @{/(page=${pageNumber - 1})}">
+            <span aria-hidden="true">&lt;</span>
+          </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="button large next" th:href="@{/boards(page=${page - 1})}"></a>
+        </li>
+
+        <!--/*@thymesVar id="last" type=""*/-->
+        <li th:classappend="${posts.get(1).last} ? 'disabled'" class="page-item">
+          <a class="button large next" th:href="${posts.get(1).last} ? '#' : @{/boards(page=${pageNumber + 1})}" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 
   <!-- Sidebar -->
