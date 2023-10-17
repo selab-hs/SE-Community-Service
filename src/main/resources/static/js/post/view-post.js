@@ -118,7 +118,11 @@ function create_post_submit() {
       "title": $("#title").val(),
       "content": content
     })
-    const urlParams = new URLSearchParams("?boardId=" + $("#type").val())
+    let result ={};
+    const postType = document.getElementById('post-type');
+    result.postType = postType.options[postType.selectedIndex].value;
+    const urlParams = new URLSearchParams("?boardId=" + postType.options[postType.selectedIndex].value)
+    console.log(postType.options[postType.selectedIndex].value);
     $.ajax({
       url: "http://localhost:8080/api/v1/posts?"+urlParams,
       data: data,

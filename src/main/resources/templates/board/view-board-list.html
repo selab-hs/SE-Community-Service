@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="ko-kr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- Post -->
+    <article class="post" th:each="post : ${post}">
+      <header>
+        <div class="title">
+          <h2><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" >[[${post.getTitle()}]]</a></h2>
+          <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+        </div>
+        <!--        <div id="post_id" th:value="${@post.getId()}">-->
+        <div class="meta">
+          <time class="published" datetime="2015-11-01">November 1, 2015</time>
+          <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+        </div>
+      </header>
+      <a href="page/single.html" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+      <footer>
+        <ul class="actions">
+          <li><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="button large">Continue Reading</a></li>
+        </ul>
+        <ul class="stats">
+          <li><a href="#">General</a></li>
+          <li><a href="#" class="icon solid fa-heart">28</a></li>
+          <li><a href="#" class="icon solid fa-heart">[[${post.getView()}]]</a></li>
+          <li><a href="#" class="icon solid fa-comment">128</a></li>
+        </ul>
+
+      </footer>
+    </article>
+
+    <ul class="actions pagination">
+      <li><a href="" class="disabled button large previous">Previous Page</a></li>
+      <li><a href="#" class="button large next">Next Page</a></li>
+      <li class="write-post"><a href="/posts" class="button large">Write Post</a></li>
+    </ul>
+
+  </div>
+</th:block>
+</html>

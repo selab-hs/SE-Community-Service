@@ -15,10 +15,10 @@
 
     <div class="col-12">
       <h3>카테고리</h3>
-      <select name="demo-category" id="demo-category" >
+      <select name="demo-category" id="post-type" >
         <option value="">- Category -</option>
-        <option id="type" th:each="board:${boards}"
-                th:value="${board.getId()}" th:utext="${board.getName()}">[[${board.getName()}]]</option>
+        <option name="post-type" th:each="board:${boards}"
+                th:value="${board.getId()}">[[${board.getName()}]]</option>
       </select>
       <br/>
     </div>
