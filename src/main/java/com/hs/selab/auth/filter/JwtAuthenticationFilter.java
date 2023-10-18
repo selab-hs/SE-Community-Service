@@ -34,7 +34,6 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         if (token != null) {
             if(!tokenProvider.validateDateToken(token)) {
                 jwtExceptionHandler(response);
-                request.setAttribute("noToken", Optional.ofNullable(null));
                 chain.doFilter(request, response);
             }
 
