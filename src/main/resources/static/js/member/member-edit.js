@@ -120,10 +120,16 @@ document.addEventListener("DOMContentLoaded", function() {
             $('#edit_student_id_input').val(result.data.studentID);
             $('#edit_grade_select').val(result.data.grade);
         },
-        error: function() {
-            console.log('유저 토큰 정보를 불러오는데 실패하였습니다. 다시 로그인을 진행해주세요.');
-            // 여기에 로컬 스토리지 토큰 삭제 추가
-            location.href = "http://localhost:8080/login";
+        error: function(response) {
+            if (response.status === 401) {
+                alert('유저 토큰이 만료되었거나 잘못되었습니다. 다시 로그인을 진행해주세요');
+                window.localStorage.clear();
+                location.href = "http://localhost:8080/login";
+            } else {
+                alert('유저 토큰 정보를 불러오는데 실패하였습니다. 다시 로그인을 진행해주세요.');
+                window.localStorage.clear();
+                location.href = "http://localhost:8080/login";
+            }
         }
     });
 });
