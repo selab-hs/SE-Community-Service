@@ -161,8 +161,8 @@ function sign_up_submit() {
                 alert("회원 가입 성공 !");
                 location.href = "http://localhost:8080/login";
             },
-            error: function(request){
-                alert("code = "+ request.status + "\nmessage = " + request.responseText);
+            error: function(response){
+                alert(response.message);
             }
         })
     } else {

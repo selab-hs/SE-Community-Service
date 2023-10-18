@@ -22,11 +22,11 @@ function login_submit() {
             window.localStorage.setItem("X-SELAB-AUTH-TOKEN", result.data);
             location.href = "http://localhost:8080/boards";
         },
-        error: function(request){
-            if(request.status === 400) {
+        error: function(response){
+            if(response.status === 400) {
                 alert("로그인 정보가 잘못되었습니다");
             } else {
-                alert("code = "+ request.status + "\nmessage = " + request.responseText);
+                alert(response.message);
             }
         }
     })
