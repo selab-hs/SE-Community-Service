@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.util.Base64;
 import java.util.Date;
@@ -96,17 +95,13 @@ public class TokenProvider {
      * @return     * token 기간
      */
 
-    public boolean validateToken(String jwtToken) {
+    public boolean validateDateToken(String jwtToken) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return claims.getBody().getExpiration().after(new Date());
-        } catch (ExpiredJwtException e)
-        {
-            log.error("토큰 만료");
+        } catch (ExpiredJwtException e) {
             return false;
-        }
-        catch (JwtException e)
-        {
+        } catch (JwtException e) {
             log.error("jwt 에러");
             return false;
         }
