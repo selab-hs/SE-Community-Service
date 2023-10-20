@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
         alert('유저 토큰이 존재하지 않습니다');
         // 여기에 로컬 스토리지 토큰 삭제 추가
         location.href = "http://localhost:8080/login";
+        return;
     }
 
     $.ajax({
