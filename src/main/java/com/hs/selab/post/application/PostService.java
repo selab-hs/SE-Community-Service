@@ -12,6 +12,7 @@ import com.hs.selab.post.dto.request.UpdatePostRequest;
 import com.hs.selab.post.dto.response.ReadAllPostResponse;
 import com.hs.selab.post.dto.response.ReadPostResponse;
 import com.hs.selab.post.event.PostViewEvent;
+import com.hs.selab.post.filter.PostSpecification;
 import com.hs.selab.post.infrastructure.PostRepository;
 import com.hs.selab.post.infrastructure.PostViewRepository;
 import java.util.Collections;
@@ -20,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,6 +118,20 @@ public class PostService {
         var postViews = postViewRepository.findAllById(postIds)
                 .stream()
                 .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
+
+        return converter.convertToReadAllPostResponse(posts, postViews);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ReadAllPostResponse> getSearchAll(Pageable pageable, String title) {
+        Specification<Post> spec = (root, query, criteriaBuilder) -> null;
+        spec = spec.and(PostSpecification.equalsTitle(title));
+        var posts = postRepository.findAll(spec, pageable);
+        var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
+
+        var postViews = postViewRepository.findAllById(postIds)
+            .stream()
+            .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
 
         return converter.convertToReadAllPostResponse(posts, postViews);
     }
