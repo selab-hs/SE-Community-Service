@@ -37,6 +37,7 @@ function update_post_submit() {
     // 여기에 로컬 스토리지 토큰 삭제 추가
     location.href = "http://localhost:8080/login";
   } else {
+    oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
     let content = document.getElementById("editorTxt").value
 
     //if(content == '') {
@@ -54,11 +55,6 @@ function update_post_submit() {
     })
     const pathArray = window.location.pathname.split("/");
     const contestPath = pathArray[2];
-    // let result ={};
-    // const postType = document.getElementById('post-type');
-    // result.postType = postType.options[postType.selectedIndex].value;
-    // const urlParams = new URLSearchParams("?boardId=" + postType.options[postType.selectedIndex].value)
-    // console.log(postType.options[postType.selectedIndex].value);
     $.ajax({
       url: "http://localhost:8080/api/v1/posts/"+contestPath,
       data: data,

@@ -36,8 +36,6 @@
     </article>
 
     <ul class="actions pagination">
-      <li><a href="" class="disabled button large previous">Previous Page</a></li>
-      <li><a href="#" class="button large next">Next Page</a></li>
       <li class="write-post"><a href="/posts" class="button large">Write Post</a></li>
     </ul>
 
@@ -52,7 +50,7 @@
             endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
 
         <li th:classappend="${posts.get(1).first} ? 'disabled'" class="page-item">
-          <a class="disabled button large previous" th:href="${posts.get(1).first} ? '#' : @{/(page=${pageNumber - 1})}">
+          <a class="disabled button large previous" th:href="${posts.get(1).first} ? '#' : @{/boards(page=${pageNumber - 1})}">
             <span aria-hidden="true">&lt;</span>
           </a>
         </li>

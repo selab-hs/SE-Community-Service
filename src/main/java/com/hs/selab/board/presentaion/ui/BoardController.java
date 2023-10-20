@@ -27,8 +27,14 @@ public class BoardController {
         var post = new ArrayList<>();
 
         var postsB = postService.getAll(pageable, list.get(1).getId());
-        var postsA = postService.getAll(pageable, list.get(0).getId());
-        post.add(postsA);
+        var postsA = postService.getAllList(list.get(0).getId());
+        var postFirst = new ArrayList<>();
+
+        for(int i=1;i<11;i++){
+            postFirst.add(postsA.get(postsA.size()-i));
+        }
+
+        post.add(postFirst);
         post.add(postsB);
 
         model.addAttribute("posts", post);
@@ -45,7 +51,7 @@ public class BoardController {
     ) {
         var posts = postService.getAll(pageable, id);
         model.addAttribute("post", posts);
-
+        model.addAttribute("indexId", id);
         return "board/view-board-list";
     }
 }

@@ -6,6 +6,9 @@ import com.hs.selab.post.domain.PostView;
 import com.hs.selab.post.dto.request.CreatePostRequest;
 import com.hs.selab.post.dto.response.ReadAllPostResponse;
 import com.hs.selab.post.dto.response.ReadPostResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
@@ -62,5 +65,29 @@ public class PostConverter {
                     );
                 }
         );
+    }
+
+    public List<ReadAllPostResponse> convertToListReadAllPostResponse(
+        List<Post> posts,
+        Map<Long, PostView> postViews
+    ) {
+        return posts.stream().map(
+            post -> {
+                var view = 0L;
+
+                if (postViews.get(post.getId()) != null) {
+                    view = postViews.get(post.getId()).getPostView();
+                }
+
+                return new ReadAllPostResponse(
+                    post.getId(),
+                    post.getBoardId(),
+                    post.getMemberId(),
+                    post.getTitle(),
+                    post.getContent(),
+                    view
+                );
+            }
+        ).collect(Collectors.toList());
     }
 }
