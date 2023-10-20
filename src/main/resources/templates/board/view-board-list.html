@@ -36,10 +36,37 @@
     </article>
 
     <ul class="actions pagination">
-      <li><a href="" class="disabled button large previous">Previous Page</a></li>
-      <li><a href="#" class="button large next">Next Page</a></li>
       <li class="write-post"><a href="/posts" class="button large">Write Post</a></li>
     </ul>
+
+    <div th:if="${!post.isEmpty()}">
+      <ul class="actions pagination"
+          th:with="
+            pageNumber = ${post.pageable.pageNumber},
+            pageSize = ${post.pageable.pageSize},
+            totalPages = ${post.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+        <li th:classappend="${post.first} ? 'disabled'" class="page-item">
+          <a class="disabled button large previous" th:href="${post.first} ? '#' : @{/boards/{id}(id=${indexId}, (page=${pageNumber - 1})}">
+            <span aria-hidden="true">&lt;</span>
+          </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="button large next" th:href="@{/boards/{id}(id = ${indexId}, page=${page - 1})}"></a>
+        </li>
+
+        <!--/*@thymesVar id="last" type=""*/-->
+        <li th:classappend="${post.last} ? 'disabled'" class="page-item">
+          <a class="button large next" th:href="${post.last} ? '#' : @{/boards/{id}(id=${indexId}, page=${pageNumber + 1})}" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
 
   </div>
 </th:block>

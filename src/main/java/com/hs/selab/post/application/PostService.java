@@ -14,6 +14,8 @@ import com.hs.selab.post.dto.response.ReadPostResponse;
 import com.hs.selab.post.event.PostViewEvent;
 import com.hs.selab.post.infrastructure.PostRepository;
 import com.hs.selab.post.infrastructure.PostViewRepository;
+import java.util.Collections;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -116,6 +118,18 @@ public class PostService {
                 .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
 
         return converter.convertToReadAllPostResponse(posts, postViews);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReadAllPostResponse> getAllList(Long boardId) {
+        var posts = postRepository.findAllByBoardId(boardId);
+        var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
+
+        var postViews = postViewRepository.findAllById(postIds)
+            .stream()
+            .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
+
+        return converter.convertToListReadAllPostResponse(posts, postViews);
     }
 
 
