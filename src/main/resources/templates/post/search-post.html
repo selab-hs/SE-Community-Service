@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html lang="ko-kr" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout}">
+<th:block layout:fragment="content">
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- Post -->
+    <article class="post" th:each="post : ${post}">
+      <header>
+        <div class="title">
+          <h2><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" >[[${post.getTitle()}]]</a></h2>
+          <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+        </div>
+        <!--        <div id="post_id" th:value="${@post.getId()}">-->
+        <div class="meta">
+          <time class="published" datetime="2015-11-01">November 1, 2015</time>
+          <a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/avatar.jpg" alt="" /></a>
+        </div>
+      </header>
+      <a href="/page/single.html" class="image featured"><img src="/images/pic01.jpg" alt="" /></a>
+      <footer>
+        <ul class="actions">
+          <li><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="button large">Continue Reading</a></li>
+        </ul>
+        <ul class="stats">
+          <li><a href="#">General</a></li>
+          <li><a href="#" class="icon solid fa-heart">28</a></li>
+          <li><a href="#" class="icon solid fa-heart">[[${post.getView()}]]</a></li>
+          <li><a href="#" class="icon solid fa-comment">128</a></li>
+        </ul>
+
+      </footer>
+    </article>
+
+    <ul class="actions pagination">
+      <li class="write-post"><a href="/posts" class="button large">Write Post</a></li>
+    </ul>
+
+    <div th:if="${!post.isEmpty()}">
+      <ul class="actions pagination"
+          th:with="
+            pageNumber = ${post.pageable.pageNumber},
+            pageSize = ${post.pageable.pageSize},
+            totalPages = ${post.totalPages},
+            startPage = ${T(java.lang.Math).floor(pageNumber / pageSize) * pageSize + 1},
+            tempEndPage = ${startPage + pageSize - 1},
+            endPage = (${tempEndPage < totalPages ? tempEndPage : totalPages})">
+
+        <li th:classappend="${post.first} ? 'disabled'" class="page-item">
+          <a class="disabled button large previous" th:href="${post.first} ? '#' : @{/boards/{id}(id=${indexId}, (page=${pageNumber - 1})}">
+            <span aria-hidden="true">&lt;</span>
+          </a>
+        </li>
+
+        <li th:each="page: ${#numbers.sequence(startPage, endPage)}" th:classappend="${page == pageNumber + 1} ? 'active'" class="page-item">
+          <a th:text="${page}" class="button large next" th:href="@{/boards/{id}(id = ${indexId}, page=${page - 1})}"></a>
+        </li>
+
+        <!--/*@thymesVar id="last" type=""*/-->
+        <li th:classappend="${post.last} ? 'disabled'" class="page-item">
+          <a class="button large next" th:href="${post.last} ? '#' : @{/boards/{id}(id=${indexId}, page=${pageNumber + 1})}" aria-label="Next">
+            <span aria-hidden="true">&gt;</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</th:block>
+</html>
