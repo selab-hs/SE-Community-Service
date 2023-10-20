@@ -44,6 +44,20 @@ public class PostRestController {
         );
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<?> getSearchPosts(
+        @PageableDefault(sort = "id", direction = Direction.DESC)
+        Pageable pageable,
+        @RequestParam(value = "title") String searchTitle
+    ) {
+        var posts = postService.getSearchAll(pageable, searchTitle);
+
+        return ResponseDto.toResponseEntity(
+            ResponseMessage.READ_SUCCESS_ALL_BOARD,
+            posts
+        );
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<?> getPosts(
             @PathVariable("id") Long id,
