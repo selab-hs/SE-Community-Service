@@ -4,12 +4,14 @@ import com.hs.selab.auth.application.AuthService;
 import com.hs.selab.auth.domain.Authentication;
 import com.hs.selab.auth.domain.UserDetail;
 import com.hs.selab.common.util.DateUtil;
+import com.hs.selab.error.dto.ErrorMessage;
+import com.hs.selab.error.exception.member.SeExpiredJwtException;
+import com.hs.selab.error.exception.member.SeJwtException;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
-
 import javax.annotation.PostConstruct;
 import java.util.Base64;
 import java.util.Date;
@@ -96,19 +98,14 @@ public class TokenProvider {
      * @return     * token 기간
      */
 
-    public boolean validateToken(String jwtToken) {
+    public boolean validateDateToken(String jwtToken) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return claims.getBody().getExpiration().after(new Date());
-        } catch (ExpiredJwtException e)
-        {
-            log.error("토큰 만료");
-            return false;
-        }
-        catch (JwtException e)
-        {
-            log.error("jwt 에러");
-            return false;
+        } catch (ExpiredJwtException e) {
+            throw new SeExpiredJwtException(ErrorMessage.EXPIRED_JWT_EXCEPTION, "토큰이 만료되었습니다");
+        } catch (JwtException e) {
+            throw new SeJwtException(ErrorMessage.WRONG_JWT_EXCEPTION, "잘못된 토큰 정보입니다");
         }
     }
 }
