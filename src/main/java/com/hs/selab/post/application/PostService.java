@@ -15,8 +15,6 @@ import com.hs.selab.post.event.PostViewEvent;
 import com.hs.selab.post.filter.PostSpecification;
 import com.hs.selab.post.infrastructure.PostRepository;
 import com.hs.selab.post.infrastructure.PostViewRepository;
-import java.util.Collections;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -26,6 +24,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -111,7 +110,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public Page<ReadAllPostResponse> getAll(Pageable pageable, Long boardId) {
+    public Page<ReadAllPostResponse> findAll(Pageable pageable, Long boardId) {
         var posts = postRepository.findAllByBoardId(boardId, pageable);
         var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
 
@@ -122,6 +121,18 @@ public class PostService {
         return converter.convertToReadAllPostResponse(posts, postViews);
     }
 
+    public List<ReadAllPostResponse> findTop5NoticePosts() {
+        var posts = postRepository.findTop5ByBoardIdOrderByIdDesc(1L);
+        var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
+
+        var postViews = postViewRepository.findAllById(postIds)
+                .stream()
+                .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
+
+        return converter.convertToListReadAllPostResponse(posts, postViews);
+    }
+
+
     @Transactional(readOnly = true)
     public Page<ReadAllPostResponse> getSearchAll(Pageable pageable, String title) {
         Specification<Post> spec = (root, query, criteriaBuilder) -> null;
@@ -130,8 +141,8 @@ public class PostService {
         var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
 
         var postViews = postViewRepository.findAllById(postIds)
-            .stream()
-            .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
+                .stream()
+                .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
 
         return converter.convertToReadAllPostResponse(posts, postViews);
     }
@@ -142,8 +153,8 @@ public class PostService {
         var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
 
         var postViews = postViewRepository.findAllById(postIds)
-            .stream()
-            .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
+                .stream()
+                .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
 
         return converter.convertToListReadAllPostResponse(posts, postViews);
     }
