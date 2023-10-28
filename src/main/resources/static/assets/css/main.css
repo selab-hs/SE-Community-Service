@@ -3471,7 +3471,7 @@ input, select, textarea {
 	}
 
 	#my-element #post_writer {
-		font-size: 30px;
+		font-size: 25px;
 		padding-right: 10px;
 		font-family: "BMD";
 		text-align: right;
@@ -3479,6 +3479,7 @@ input, select, textarea {
 
 	#my-element .board-category {
 		text-align: right;
+		color: #d3d3d3;
 	}
 
 	@media screen and (max-width: 1280px) {
