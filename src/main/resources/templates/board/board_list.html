@@ -17,19 +17,18 @@
 <!--        <div id="post_id" th:value="${@post.getId()}">-->
         <div class="meta">
           <time class="published" datetime="2015-11-01">November 1, 2015</time>
-          <a href="#" class="author"><span class="name">Jane Doe</span><img src="images/avatar.jpg" alt="" /></a>
+          <a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/user.png" alt="" /></a>
         </div>
       </header>
-      <a href="page/single.html" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+      <a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="image featured"><img src="/images/free-forum.png" alt="" /></a>
       <footer>
         <ul class="actions">
           <li><a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="button large">Continue Reading</a></li>
         </ul>
         <ul class="stats">
-          <li><a href="#">General</a></li>
           <li><a href="#" class="icon solid fa-heart">28</a></li>
-          <li><a href="#" class="icon solid fa-heart">[[${post.getView()}]]</a></li>
           <li><a href="#" class="icon solid fa-comment">128</a></li>
+          <li><a href="#" class="icon solid fa-check">[[${post.getView()}]]</a></li>
         </ul>
 
       </footer>
@@ -90,9 +89,9 @@
           <header>
             <h3><a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}">[[${postA.getTitle()}]]</a></h3>
             <time class="published" datetime="2015-10-20">October 20, 2015</time>
-            <a href="#" class="author"><img src="/images/avatar.jpg" alt="" /></a>
+            <a href="#" class="author"><img src="/images/users.png" alt="" /></a>
           </header>
-          <a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}" class="image"><img src="/images/pic04.jpg" alt="" /></a>
+          <a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}" class="image"><img src="/images/notice.png" alt="" /></a>
         </article>
 
       </div>
