@@ -2687,6 +2687,10 @@ input, select, textarea {
 				top: 2em;
 			}
 
+			.author img{
+				border: 1px solid #d3d3d3;
+			}
+
 	.mini-posts {
 		margin: 0 0 2em 0;
 	}
@@ -2944,6 +2948,7 @@ input, select, textarea {
 							}
 
 							.post > header .meta .author img {
+								border: 2px solid #000000;
 								width: 3.5em;
 							}
 
