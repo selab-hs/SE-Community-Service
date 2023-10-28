@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
           var p = $('<p>').addClass('published').attr('id',
               'comment_content').text(arr[i].commentId);
           var a = $('<a>').attr('href', 'page/single.html').addClass('image');
-          var img = $('<img>').attr('src', '/images/pic08.jpg').attr('alt', '');
+          var img = $('<img>').attr('src', '/images/user-post.svg').attr('alt', '');
 
           // Append elements
           header.append(h3);
