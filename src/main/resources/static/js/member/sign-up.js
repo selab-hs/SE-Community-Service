@@ -162,7 +162,7 @@ function sign_up_submit() {
                 location.href = "http://localhost:8080/login";
             },
             error: function(response){
-                alert(response.message);
+                alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
             }
         })
     } else {

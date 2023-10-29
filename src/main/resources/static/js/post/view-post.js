@@ -85,6 +85,9 @@ document.addEventListener('DOMContentLoaded', function () {
           // Append the created elements to the commentsContainer
           commentsContainer.append(ul);
         }
+      },
+      error: function(response) {
+        handleCommonError(response);
       }
     })
   }
@@ -110,8 +113,8 @@ function create_comment_submit() {
     success: function () {
       location.href = "http://localhost:8080/viewPost/" + contestPath;
     },
-    error: function (request) {
-      alert("code = " + request.status + "\nmessage = " + request.responseText);
+    error: function(response) {
+      handleCommonError(response);
     }
   });
 }
@@ -157,9 +160,8 @@ function create_post_submit() {
         location.href = "http://localhost:8080/boards";
 
       },
-      error: function (request) {
-        alert(
-            "code = " + request.status + "\nmessage = " + request.responseText);
+      error: function(response) {
+        handleCommonError(response);
       }
     });
   }
@@ -199,6 +201,9 @@ function deleteButton() {
       },
       success: function () {
         location.href = "http://localhost:8080/boards";
+      },
+      error: function(response) {
+        handleCommonError(response);
       }
     });
   }

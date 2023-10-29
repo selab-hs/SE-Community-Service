@@ -20,10 +20,8 @@ document.addEventListener("DOMContentLoaded", function() {
       $('#post_title').val(result.data.title);
       $('#editorTxt').val(result.data.content);
     },
-    error: function() {
-      console.log('유저 토큰 정보를 불러오는데 실패하였습니다. 다시 로그인을 진행해주세요.');
-      // 여기에 로컬 스토리지 토큰 삭제 추가
-      location.href = "http://localhost:8080/login";
+    error: function(response) {
+      handleCommonError(response);
     }
   });
 });
@@ -67,9 +65,8 @@ function update_post_submit() {
         location.href = "http://localhost:8080/viewPost/"+contestPath;
 
       },
-      error: function (request) {
-        alert(
-            "code = " + request.status + "\nmessage = " + request.responseText);
+      error: function(response) {
+        handleCommonError(response);
       }
     });
   }

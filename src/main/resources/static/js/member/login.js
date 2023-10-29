@@ -25,7 +25,7 @@ function login_submit() {
             if(response.status === 400) {
                 alert("로그인 정보가 잘못되었습니다");
             } else {
-                alert(response.message);
+                alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
             }
         }
     })
