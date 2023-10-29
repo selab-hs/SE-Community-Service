@@ -6,6 +6,11 @@
 
 (function($) {
 
+	var imageElements = document.querySelectorAll(".board-img1");
+	imageElements.forEach(function(image) {
+		image.src = "/images/notice2.png";
+	});
+
 	var	$window = $(window),
 		$body = $('body'),
 		$menu = $('#menu'),
