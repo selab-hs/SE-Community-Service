@@ -23,10 +23,32 @@ document.addEventListener('DOMContentLoaded', function () {
       },
       success: function (result) {
         $('#post_title').text(result.data.title);
-        $('#post_writer').text(result.data.memberId);
         $('#post_content').val(result.data.content);
       }
     });
+
+    $.ajax({
+      url: 'http://localhost:8080/api/v1/auth/info',
+      method: 'GET',
+      headers : {
+        'X-SELAB-AUTH-TOKEN': authToken
+      },
+      success: function(result) {
+        $('#post_writer').text(result.data.name);
+      },
+      error: function(response) {
+        if (response.status === 401) {
+          alert('유저 토큰이 만료되었거나 잘못되었습니다. 다시 로그인을 진행해주세요');
+          window.localStorage.clear();
+          location.href = "http://localhost:8080/login";
+        } else {
+          alert('유저 토큰 정보를 불러오는데 실패하였습니다. 다시 로그인을 진행해주세요.');
+          window.localStorage.clear();
+          location.href = "http://localhost:8080/login";
+        }
+      }
+    });
+
     const urlParams = new URLSearchParams("?postId=" + contestPath)
     $.ajax({
       url: 'http://localhost:8080/api/v1/comments?' + urlParams,
