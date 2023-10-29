@@ -93,7 +93,7 @@ function edit_submit() {
                 window.localStorage.clear();
                 location.href = "http://localhost:8080/login";
             },
-            error: function(request){
+            error: function(response){
                 alert("code = "+ request.status + "\nmessage = " + request.responseText);
             }
         })
@@ -121,15 +121,7 @@ document.addEventListener("DOMContentLoaded", function() {
             $('#edit_grade_select').val(result.data.grade);
         },
         error: function(response) {
-            if (response.status === 401) {
-                alert('유저 토큰이 만료되었거나 잘못되었습니다. 다시 로그인을 진행해주세요');
-                window.localStorage.clear();
-                location.href = "http://localhost:8080/login";
-            } else {
-                alert('유저 토큰 정보를 불러오는데 실패하였습니다. 다시 로그인을 진행해주세요.');
-                window.localStorage.clear();
-                location.href = "http://localhost:8080/login";
-            }
+            handleCommonError(response);
         }
     });
 });
