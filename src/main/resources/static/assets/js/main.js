@@ -3,6 +3,17 @@
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
+function handleCommonError(response) {
+	if (response.status === 401) {
+		alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
+		window.localStorage.clear();
+		location.href = "http://localhost:8080/login";
+	} else {
+		alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
+		location.href = "http://localhost:8080/boards";
+	}
+}
+
 
 (function($) {
 
@@ -151,6 +162,9 @@ $(document).ready(function() {
 				li2.append(a2);
 				ul2.append(li2);
 			});
+		},
+		error: function(response) {
+			handleCommonError(response);
 		}
 	});
 });
