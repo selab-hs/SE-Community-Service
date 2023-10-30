@@ -3,6 +3,7 @@ package com.hs.selab.comment.application;
 import static com.hs.selab.error.dto.ErrorMessage.UNAUTHORIZED_ACCESS_EXCEPTION;
 
 import com.hs.selab.auth.domain.UserDetail;
+import com.hs.selab.comment.domain.Comment;
 import com.hs.selab.comment.domain.converter.CommentConverter;
 import com.hs.selab.comment.dto.request.CreateCommentRequest;
 import com.hs.selab.comment.dto.request.ReadCommentRequest;
@@ -11,8 +12,12 @@ import com.hs.selab.comment.dto.response.ReadCommentResponse;
 import com.hs.selab.comment.infrastructure.CommentRepository;
 
 import com.hs.selab.error.exception.member.UnauthorizedAccessException;
+import com.hs.selab.member.domain.Member;
 import com.hs.selab.member.domain.vo.RoleType;
+import com.hs.selab.member.infrastructure.MemberRepository;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final MemberRepository memberRepository;
     private final CommentConverter converter;
 
     @Transactional
@@ -59,9 +65,15 @@ public class CommentService {
                 "권한이 없는 접근입니다."
             );
         }
+        var comments =  commentRepository.findAllByPostId(request.getPostId());
+        var commentMemberIds = comments.stream().map(Comment::getMemberId).collect(Collectors.toList());
+
+        var commentWriteUserNames = memberRepository.findAllById(commentMemberIds)
+            .stream()
+            .collect(Collectors.toMap(Member::getId, Function.identity()));
 
         return converter.convertToReadCommentResponse(
-            commentRepository.findAllByPostId(request.getPostId())
+           comments, commentWriteUserNames
         );
     }
 
