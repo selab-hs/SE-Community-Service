@@ -16,8 +16,8 @@
         </div>
         <!--        <div id="post_id" th:value="${@post.getId()}">-->
         <div class="meta">
-          <time class="published" datetime="2015-11-01">November 1, 2015</time>
-          <a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/user.png" alt="" /></a>
+          <time class="published" th:datetime="${post.getTime()}">[[${post.getTime()}]]</time>
+          <a href="#" class="author"><span class="name" th:text="${post.getPostWriteMemberName()}">[[${post.getPostWriteMemberName()}]]</span><img src="/images/user.png" alt="" /></a>
         </div>
       </header>
       <a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="image featured"><img src="/images/free-forum2.png" alt="" th:class="'board-img' + ${post.getBoardId()}"/></a>

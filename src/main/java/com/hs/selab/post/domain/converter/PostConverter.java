@@ -1,18 +1,18 @@
 package com.hs.selab.post.domain.converter;
 
 import com.hs.selab.auth.domain.UserDetail;
+import com.hs.selab.member.domain.Member;
 import com.hs.selab.post.domain.Post;
 import com.hs.selab.post.domain.PostView;
 import com.hs.selab.post.dto.request.CreatePostRequest;
 import com.hs.selab.post.dto.response.ReadAllPostResponse;
 import com.hs.selab.post.dto.response.ReadPostResponse;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class PostConverter {
@@ -46,10 +46,12 @@ public class PostConverter {
 
     public Page<ReadAllPostResponse> convertToReadAllPostResponse(
             Page<Post> posts,
-            Map<Long, PostView> postViews
+            Map<Long, PostView> postViews,
+            Map<Long, Member> postWriterMemberNames
     ) {
         return posts.map(p -> {
                     var view = 0L;
+                    var postWriterMemberName = postWriterMemberNames.get(p.getMemberId()).getName().getName();
 
                     if (postViews.get(p.getId()) != null) {
                         view = postViews.get(p.getId()).getPostView();
@@ -61,7 +63,9 @@ public class PostConverter {
                             p.getMemberId(),
                             p.getTitle(),
                             p.getContent(),
-                            view
+                            view,
+                            p.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                            postWriterMemberName
                     );
                 }
         );
@@ -79,13 +83,16 @@ public class PostConverter {
                     view = postViews.get(post.getId()).getPostView();
                 }
 
+
                 return new ReadAllPostResponse(
                     post.getId(),
                     post.getBoardId(),
                     post.getMemberId(),
                     post.getTitle(),
                     post.getContent(),
-                    view
+                    view,
+                    post.getModifiedAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                    ""
                 );
             }
         ).collect(Collectors.toList());

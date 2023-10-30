@@ -12,4 +12,5 @@ public class ReadPostResponse {
         private String title;
         private String content;
         private Long view;
+        private String time;
 }

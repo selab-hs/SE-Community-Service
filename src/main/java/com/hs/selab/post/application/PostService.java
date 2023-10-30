@@ -3,7 +3,9 @@ package com.hs.selab.post.application;
 import com.hs.selab.auth.domain.UserDetail;
 import com.hs.selab.error.exception.board.NonExistentBoardException;
 import com.hs.selab.error.exception.member.UnauthorizedAccessException;
+import com.hs.selab.member.domain.Member;
 import com.hs.selab.member.domain.vo.RoleType;
+import com.hs.selab.member.infrastructure.MemberRepository;
 import com.hs.selab.post.domain.Post;
 import com.hs.selab.post.domain.PostView;
 import com.hs.selab.post.domain.converter.PostConverter;
@@ -15,7 +17,6 @@ import com.hs.selab.post.event.PostViewEvent;
 import com.hs.selab.post.filter.PostSpecification;
 import com.hs.selab.post.infrastructure.PostRepository;
 import com.hs.selab.post.infrastructure.PostViewRepository;
-import java.util.Collections;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -37,6 +38,7 @@ import static com.hs.selab.error.dto.ErrorMessage.UNAUTHORIZED_ACCESS_EXCEPTION;
 public class PostService {
     private final PostRepository postRepository;
     private final PostViewRepository postViewRepository;
+    private final MemberRepository memberRepository;
     private final ApplicationEventPublisher applicationEventPublisher;
     private final PostConverter converter;
 
@@ -114,12 +116,17 @@ public class PostService {
     public Page<ReadAllPostResponse> getAll(Pageable pageable, Long boardId) {
         var posts = postRepository.findAllByBoardId(boardId, pageable);
         var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
+        var postMemberIds = posts.stream().map(Post::getMemberId).collect(Collectors.toList());
 
         var postViews = postViewRepository.findAllById(postIds)
                 .stream()
                 .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
 
-        return converter.convertToReadAllPostResponse(posts, postViews);
+        var postWriteUserNames = memberRepository.findAllById(postMemberIds)
+            .stream()
+            .collect(Collectors.toMap(Member::getId, Function.identity()));
+
+        return converter.convertToReadAllPostResponse(posts, postViews, postWriteUserNames);
     }
 
     @Transactional(readOnly = true)
@@ -128,12 +135,17 @@ public class PostService {
         spec = spec.and(PostSpecification.equalsTitle(title));
         var posts = postRepository.findAll(spec, pageable);
         var postIds = posts.stream().map(Post::getId).collect(Collectors.toList());
+        var postMemberIds = posts.stream().map(Post::getMemberId).collect(Collectors.toList());
 
         var postViews = postViewRepository.findAllById(postIds)
             .stream()
             .collect(Collectors.toMap(PostView::getPostId, Function.identity()));
 
-        return converter.convertToReadAllPostResponse(posts, postViews);
+        var postWriteUserName = memberRepository.findAllById(postMemberIds)
+            .stream()
+            .collect(Collectors.toMap(Member::getId, Function.identity()));
+
+        return converter.convertToReadAllPostResponse(posts, postViews, postWriteUserName);
     }
 
     @Transactional(readOnly = true)
