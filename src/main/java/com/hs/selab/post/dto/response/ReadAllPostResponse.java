@@ -1,5 +1,7 @@
 package com.hs.selab.post.dto.response;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,4 +18,6 @@ public class ReadAllPostResponse {
     private String title;
     private String content;
     private Long view;
+    private String time;
+    private String postWriteMemberName;
 }

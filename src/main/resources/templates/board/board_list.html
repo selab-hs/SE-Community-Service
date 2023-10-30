@@ -16,8 +16,8 @@
         </div>
 <!--        <div id="post_id" th:value="${@post.getId()}">-->
         <div class="meta">
-          <time class="published" datetime="2015-11-01">November 1, 2015</time>
-          <a href="#" class="author"><span class="name">Jane Doe</span><img src="/images/user.png" alt="" /></a>
+          <time class="published" id="time" th:datetime="${post.getTime()}">[[${post.getTime()}]]</time>
+          <a href="#" class="author"><span class="name" th:text="${post.getPostWriteMemberName()}">[[${post.getPostWriteMemberName()}]]</span><img src="/images/user.png" alt="" /></a>
         </div>
       </header>
       <a th:href= "@{/viewPost/{id}(id = ${post.getId()})}" class="image featured"><img src="/images/free-forum.png" alt="" /></a>
@@ -88,7 +88,7 @@
         <article class="mini-post" th:each="postA : ${posts.get(0)}">
           <header>
             <h3><a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}">[[${postA.getTitle()}]]</a></h3>
-            <time class="published" datetime="2015-10-20">October 20, 2015</time>
+            <time class="published" th:datetime="${postA.getTime()}">[[${postA.getTime()}]]</time>
             <a href="#" class="author"><img src="/images/users.png" alt="" /></a>
           </header>
           <a th:href= "@{/viewPost/{id}(id = ${postA.getId()})}" class="image"><img src="/images/notice.png" alt="" /></a>
