@@ -24,6 +24,13 @@ document.addEventListener('DOMContentLoaded', function () {
       success: function (result) {
         $('#post_title').text(result.data.title);
         $('#post_content').val(result.data.content);
+
+        if(result.data.boardId === 1){
+          $('#post_boardId').text("공지 게시판");
+        }
+        if(result.data.boardId === 2){
+          $('#post_boardId').text("자유 게시판");
+        }
       }
     });
 
@@ -69,7 +76,7 @@ document.addEventListener('DOMContentLoaded', function () {
           var h3 = $('<h3>').attr('id', 'comment_member_id').text(
               arr[i].comment);
           var p = $('<p>').addClass('published').attr('id',
-              'comment_content').text(arr[i].commentId);
+              'comment_content').text(arr[i].commentWriteMemberName);
           var a = $('<a>').attr('href', 'page/single.html').addClass('image');
           var img = $('<img>').attr('src', '/images/user-post.svg').attr('alt', '');
 
