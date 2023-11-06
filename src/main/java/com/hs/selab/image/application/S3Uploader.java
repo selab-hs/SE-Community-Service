@@ -6,8 +6,10 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.hs.selab.config.s3.S3Config;
 import com.hs.selab.error.dto.ErrorMessage;
 import com.hs.selab.error.exception.board.FileConverterException;
+import com.hs.selab.image.dto.request.SmartEditor;
 import com.hs.selab.image.dto.response.UploadBundle;
 import com.hs.selab.image.dto.response.UploadResponse;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.slf4j.Logger;
@@ -30,6 +32,24 @@ public class S3Uploader {
 
     private static final String URL_SLASH = "/";
     private static final String DIRECTORY_PROPERTY = "user.dir";
+
+
+    public SmartEditor singleImageUpload(UploadBundle bundle, MultipartFile imgFile) {
+
+        String fileName = imgFile.getOriginalFilename();
+        String fileUrl = upload(bundle).getUploadImageUrl();
+
+        SmartEditor smartEditor = new SmartEditor();
+        smartEditor.setSFileURL(fileUrl);
+        smartEditor.setSFileName(fileName);
+
+//        SmartEditor smartEditor = new SmartEditor();
+//        smartEditor.setSFileName(bundle.getMultipartFile().getName());
+//        smartEditor.setSFileURL(fileUrl);
+//        smartEditor.setBNewLine(true);
+
+        return smartEditor;
+    }
 
     @SneakyThrows
     public UploadResponse upload(UploadBundle bundle) {
