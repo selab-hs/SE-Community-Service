@@ -332,9 +332,8 @@
      */
     function html5Upload() {	
     	var tempFile,
-    		sUploadURL;
-    	
-    	sUploadURL= 'file_uploader_html5.php'; 	//upload URL
+					sUploadURL;
+			sUploadURL = 'http://localhost:8080/images'; 	//upload URL
     	
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
@@ -349,7 +348,6 @@
     		tempFile = null;
     	}
 	}
-    
     function callAjaxForHTML5 (tempFile, sUploadURL){
     	var oAjax = jindo.$Ajax(sUploadURL, {
 			type: 'xhr',
@@ -467,20 +465,62 @@
       */
      function uploadImage (e){
     	 if(!bSupportDragAndDropAPI){
-    		 generalUpload();
+    		 //generalUpload();
+				 customGeneralUpload()
     	 }else{
-    		 html5Upload();
-    	 }
+    		 //html5Upload();
+				 customGeneralUpload()
+			 }
      }
-     
+
+	function customGeneralUpload() {
+		let imgFile = jQuery3_4_1("#uploadInputBox")[0].files[0];
+
+		console.log(imgFile)
+		let fdata = new FormData();
+		fdata.enctype = "multipart/form-data"
+		fdata.method = "POST"
+
+		fdata.append("filedata", imgFile)
+
+		jQuery3_4_1.ajax({
+			url: "http://localhost:8080/images"
+			, data: fdata
+			, method: "post"
+			, enctype: "multipart/formdata; charset=utf-8"
+			, processData: false
+			, contentType: false
+			, cache: false
+			, success: function(data) {
+				let sfileURL = data.sFileURL || ""
+				let sfileName = data.sFileName ||  ""
+				if(data.result == "200") {
+					let aResult = []
+					let obj = {
+						"sfileURL" : sfileURL
+						, "sfileName" : sfileName
+					}
+					aResult.push(obj)
+					setPhotoToEditor(aResult) // 사진을 에디터에 세팅(기존함수)
+					goReadyMode()	// 초기 사진업로드 준비상태로 되돌리기
+					window.close()	// 사진 업로드 창 닫기
+				} else {
+					alert('사진 업로드를 실패하였습니다.')
+				}
+			}
+			, error: function(xhr, textStatus, errorThrown) {
+				alert('에러 사진 업로드를 실패하였습니다.')
+			}
+		})
+	}
  	/**
  	 * jindo에 파일 업로드 사용.(iframe에 Form을 Submit하여 리프레시없이 파일을 업로드하는 컴포넌트)
  	 */
  	function callFileUploader (){
  		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
- 			sUrl  : location.href.replace(/\/[^\/]*$/, '') + '/file_uploader.php',	//샘플 URL입니다.
- 	        sCallback : location.href.replace(/\/[^\/]*$/, '') + '/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
- 	    	sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)	
+ 			sUrl  : 'http://localhost:8080/images', //샘플 URL입니다.
+			sCallback : '/smarteditor2/sample/photo_uploader/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
+ 	    	sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)
  	    	sMsgNotAllowedExt : 'JPG, GIF, PNG, BMP 확장자만 가능합니다',	//허용할 파일의 형식이 아닌경우에 띄워주는 경고창의 문구
  	    	bAutoUpload : false,									 	//파일이 선택됨과 동시에 자동으로 업로드를 수행할지 여부 (upload 메소드 수행)
  	    	bAutoReset : true 											// 업로드한 직후에 파일폼을 리셋 시킬지 여부 (reset 메소드 수행)
@@ -611,7 +651,7 @@
  		req.open(opt.method.toUpperCase(), url, opt.async);
  		if (opt.sendheader) {
  			if(!this._headers["Content-Type"]){
- 				req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+ 				req.setRequestHeader("Content-Type", "multipart/form-data; charset=utf-8");
  			}
  			req.setRequestHeader("charset", "utf-8");
  			for (var x in this._headers) {
