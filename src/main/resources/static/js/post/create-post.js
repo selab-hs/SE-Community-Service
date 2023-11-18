@@ -70,7 +70,7 @@ function create_post_submit() {
     let content = document.getElementById("editorTxt").value
 
     //if(content == '') {
-    if(content == '<p>&nbsp;</p>') { //비어있어도 기본 P태그가 붙더라.
+    if(content === '<p>&nbsp;</p>') { //비어있어도 기본 P태그가 붙더라.
       alert("내용을 입력해주세요.")
       oEditors.getById["editorTxt"].exec("FOCUS")
       return

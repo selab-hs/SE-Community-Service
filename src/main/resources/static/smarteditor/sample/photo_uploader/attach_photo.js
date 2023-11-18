@@ -36,19 +36,19 @@
 	
 	//File API 지원 여부로 결정
 	function checkDragAndDropAPI(){
-		try{
-			if( !oNavigator.ie ){
-				if(!!oNavigator.safari && oNavigator.version <= 5){
-					bSupportDragAndDropAPI = false;
-				}else{
-					bSupportDragAndDropAPI = true;
-				}
-			} else {
-				bSupportDragAndDropAPI = false;
-			}
-		}catch(e){
+		// try{
+		// 	if( !oNavigator.ie ){
+		// 		if(!!oNavigator.safari && oNavigator.version <= 5){
+		// 			bSupportDragAndDropAPI = false;
+		// 		}else{
+		// 			bSupportDragAndDropAPI = true;
+		// 		}
+		// 	} else {
+		// 		bSupportDragAndDropAPI = false;
+		// 	}
+		// }catch(e){
 			bSupportDragAndDropAPI = false;
-		}
+//		}
 	}
 	
 	//--------------- html5 미지원 브라우저에서 (IE9 이하) ---------------
@@ -465,21 +465,20 @@
       */
      function uploadImage (e){
     	 if(!bSupportDragAndDropAPI){
-    		 //generalUpload();
-				 customGeneralUpload()
+    		 generalUpload();
+				 //customGeneralUpload()
     	 }else{
-    		 //html5Upload();
-				 customGeneralUpload()
+    		 html5Upload();
+				 //customGeneralUpload()
 			 }
      }
 
 	function customGeneralUpload() {
 		let imgFile = jQuery3_4_1("#uploadInputBox")[0].files[0];
 
-		console.log(imgFile)
 		let fdata = new FormData();
 		fdata.enctype = "multipart/form-data"
-		fdata.method = "POST"
+		fdata.method = "post"
 
 		fdata.append("filedata", imgFile)
 
@@ -494,8 +493,9 @@
 			, success: function(data) {
 				let sfileURL = data.sFileURL || ""
 				let sfileName = data.sFileName ||  ""
-				if(data.result == "200") {
+				// if(data.result == "201") {
 					let aResult = []
+					console.log("여기까지 왔ㄱㄷ")
 					let obj = {
 						"sfileURL" : sfileURL
 						, "sfileName" : sfileName
@@ -503,10 +503,10 @@
 					aResult.push(obj)
 					setPhotoToEditor(aResult) // 사진을 에디터에 세팅(기존함수)
 					goReadyMode()	// 초기 사진업로드 준비상태로 되돌리기
-					window.close()	// 사진 업로드 창 닫기
-				} else {
-					alert('사진 업로드를 실패하였습니다.')
-				}
+				//	window.close()	// 사진 업로드 창 닫기
+				// } else {
+				// 	alert('사진 업로드를 실패하였습니다.')
+				// }
 			}
 			, error: function(xhr, textStatus, errorThrown) {
 				alert('에러 사진 업로드를 실패하였습니다.')
