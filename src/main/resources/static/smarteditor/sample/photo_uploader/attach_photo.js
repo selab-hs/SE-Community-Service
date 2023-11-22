@@ -333,7 +333,7 @@
     function html5Upload() {	
     	var tempFile,
 					sUploadURL;
-			sUploadURL = 'http://localhost:8080/images'; 	//upload URL
+			sUploadURL = 'http://43.202.162.17:8080/images'; 	//upload URL
     	
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
@@ -484,7 +484,7 @@
 		fdata.append("callback", imgFile.sCallback)
 
 		jQuery3_4_1.ajax({
-			url: "http://localhost:8080/images"
+			url: "http://43.202.162.17:8080/images"
 			, data: fdata
 			, method: "post"
 			, enctype: "multipart/formdata; charset=utf-8"
@@ -519,7 +519,7 @@
  	 */
  	function callFileUploader (){
  		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
- 			sUrl  : 'http://localhost:8080/images', //샘플 URL입니다.
+ 			sUrl  : 'http://43.202.162.17:8080/images', //샘플 URL입니다.
 			sCallback : '/smarteditor2/sample/photo_uploader/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
  	    	sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)
  	    	sMsgNotAllowedExt : 'JPG, GIF, PNG, BMP 확장자만 가능합니다',	//허용할 파일의 형식이 아닌경우에 띄워주는 경고창의 문구

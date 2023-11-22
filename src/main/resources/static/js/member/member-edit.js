@@ -84,14 +84,14 @@ function edit_submit() {
         });
 
         $.ajax({
-            url: "http://localhost:8080/api/v1/members/edit",
+            url: "http://43.202.162.17:8080/api/v1/members/edit",
             data: data,
             headers : requestHeaders,
             type: "PATCH",
             success: function() {
                 alert("회원 정보 변경 성공 ! 다시 로그인을 진행해주세요");
                 window.localStorage.clear();
-                location.href = "http://localhost:8080/login";
+                location.href = "http://43.202.162.17:8080/login";
             },
             error: function(response){
                 alert("code = "+ request.status + "\nmessage = " + request.responseText);
@@ -106,12 +106,12 @@ function edit_submit() {
 document.addEventListener("DOMContentLoaded", function() {
     if(window.localStorage.getItem('X-SELAB-AUTH-TOKEN') == null) {
         alert('유저 토큰이 존재하지 않습니다');
-        location.href = "http://localhost:8080/login";
+        location.href = "http://43.202.162.17:8080/login";
         return;
     }
 
     $.ajax({
-        url: 'http://localhost:8080/api/v1/auth/info',
+        url: 'http://43.202.162.17:8080/api/v1/auth/info',
         method: 'GET',
         headers : requestHeaders,
         success: function(result) {

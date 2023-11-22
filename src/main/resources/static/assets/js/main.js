@@ -7,10 +7,10 @@ function handleCommonError(response) {
 	if (response.status === 401) {
 		alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
 		window.localStorage.clear();
-		location.href = "http://localhost:8080/login";
+		location.href = "http://43.202.162.17:8080/login";
 	} else {
 		alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
-		location.href = "http://localhost:8080/boards";
+		location.href = "http://43.202.162.17:8080/boards";
 	}
 }
 
@@ -134,7 +134,7 @@ $(document).ready(function() {
 	}
 
 	$.ajax({
-		url: 'http://localhost:8080/api/v1/boards/category',
+		url: 'http://43.202.162.17:8080/api/v1/boards/category',
 		method: 'GET',
 		contentType: 'application/json',
 		success: function (result) {
@@ -144,14 +144,14 @@ $(document).ready(function() {
 			result.data.forEach(function (item) {
 				const li = document.createElement('li');
 				const a = document.createElement('a');
-				a.setAttribute('href', 'http://localhost:8080/boards/' + item.id);
+				a.setAttribute('href', 'http://43.202.162.17:8080/boards/' + item.id);
 				a.textContent = item.name;
 				li.append(a);
 				ul.append(li);
 
 				const li2 = document.createElement('li');
 				const a2 = document.createElement('a');
-				a2.setAttribute('href', 'http://localhost:8080/boards/' + item.id);
+				a2.setAttribute('href', 'http://43.202.162.17:8080/boards/' + item.id);
 				const h3 = document.createElement('h3');
 				h3.textContent = item.name;
 				const p = document.createElement('p');

@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function() {
   if(window.localStorage.getItem('X-SELAB-AUTH-TOKEN') == null) {
     alert('유저 토큰이 존재하지 않습니다');
     // 여기에 로컬 스토리지 토큰 삭제 추가
-    location.href = "http://localhost:8080/login";
+    location.href = "http://43.202.162.17:8080/login";
   }
 
   const pathArray = window.location.pathname.split("/");
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
   console.log(contestPath)
 
   $.ajax({
-    url: 'http://localhost:8080/api/v1/posts/'+ contestPath,
+    url: 'http://43.202.162.17:8080/api/v1/posts/'+ contestPath,
     method: 'GET',
     headers :{
       'X-SELAB-AUTH-TOKEN': authToken
