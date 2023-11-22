@@ -480,7 +480,8 @@
 		fdata.enctype = "multipart/form-data"
 		fdata.method = "post"
 
-		fdata.append("filedata", imgFile)
+		fdata.append("Filedata", imgFile)
+		fdata.append("callback", imgFile.sCallback)
 
 		jQuery3_4_1.ajax({
 			url: "http://localhost:8080/images"
