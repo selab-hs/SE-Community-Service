@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (authToken === null) {
     alert('유저 토큰이 존재하지 않습니다');
     // 여기에 로컬 스토리지 토큰 삭제 추가
-    location.href = "http://www.se-community.net/login";
+    location.href = "https://www.se-community.net/login";
   } else {
     // 요청 헤더에 토큰 추가
     var requestHeaders = {
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function () {
     console.log(contestPath)
 
     $.ajax({
-      url: 'http://www.se-community.net/api/v1/posts/' + contestPath,
+      url: 'https://www.se-community.net/api/v1/posts/' + contestPath,
       type: 'GET',
       headers: {
         'X-SELAB-AUTH-TOKEN': authToken
@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     $.ajax({
-      url: 'http://www.se-community.net/api/v1/auth/info',
+      url: 'https://www.se-community.net/api/v1/auth/info',
       method: 'GET',
       headers : {
         'X-SELAB-AUTH-TOKEN': authToken
@@ -47,11 +47,11 @@ document.addEventListener('DOMContentLoaded', function () {
         if (response.status === 401) {
           alert('유저 토큰이 만료되었거나 잘못되었습니다. 다시 로그인을 진행해주세요');
           window.localStorage.clear();
-          location.href = "http://www.se-community.net/login";
+          location.href = "https://www.se-community.net/login";
         } else {
           alert('유저 토큰 정보를 불러오는데 실패하였습니다. 다시 로그인을 진행해주세요.');
           window.localStorage.clear();
-          location.href = "http://www.se-community.net/login";
+          location.href = "https://www.se-community.net/login";
         }
       }
     });
@@ -64,7 +64,7 @@ function create_post_submit() {
   if (authToken === null) {
     alert('유저 토큰이 존재하지 않습니다');
     // 여기에 로컬 스토리지 토큰 삭제 추가
-    location.href = "http://www.se-community.net/login";
+    location.href = "https://www.se-community.net/login";
   } else {
     oEditors.getById["editorTxt"].exec("UPDATE_CONTENTS_FIELD", [])
     let content = document.getElementById("editorTxt").value
@@ -88,7 +88,7 @@ function create_post_submit() {
     const urlParams = new URLSearchParams("?boardId=" + postType.options[postType.selectedIndex].value)
     console.log(postType.options[postType.selectedIndex].value);
     $.ajax({
-      url: "http://www.se-community.net/api/v1/posts?"+urlParams,
+      url: "https://www.se-community.net/api/v1/posts?"+urlParams,
       data: data,
       headers: {
         'Content-Type': 'application/json',
@@ -96,7 +96,7 @@ function create_post_submit() {
       },
       type: "POST",
       success: function () {
-        location.href = "http://www.se-community.net/boards";
+        location.href = "https://www.se-community.net/boards";
 
       },
       error: function(response) {

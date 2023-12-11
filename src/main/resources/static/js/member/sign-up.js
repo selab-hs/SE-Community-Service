@@ -38,7 +38,7 @@ function email_duplication_check() {
     }
 
     $.ajax({
-        url: "http://www.se-community.net/api/v1/members/email-check?email=" + email.val(),
+        url: "https://www.se-community.net/api/v1/members/email-check?email=" + email.val(),
         type: "GET",
         success: function() {
             alert("중복되지 않은 이메일입니다.");
@@ -116,7 +116,7 @@ const maxLength = (e) =>{
 document.addEventListener("DOMContentLoaded", function() {
     if (window.localStorage.getItem('X-SELAB-AUTH-TOKEN') != null) {
         alert('유저 정보가 이미 존재합니다.');
-        location.href = "http://www.se-community.net/home";
+        location.href = "https://www.se-community.net/home";
         return;
     }
 
@@ -153,13 +153,13 @@ function sign_up_submit() {
         });
 
         $.ajax({
-            url: "http://www.se-community.net/api/v1/members/signup",
+            url: "https://www.se-community.net/api/v1/members/signup",
             data: data,
             contentType: 'application/json',
             type: "POST",
             success: function() {
                 alert("회원 가입 성공 !");
-                location.href = "http://www.se-community.net/login";
+                location.href = "https://www.se-community.net/login";
             },
             error: function(response){
                 alert("[ " + response.status + " ] " + JSON.parse(response.responseText).message);
