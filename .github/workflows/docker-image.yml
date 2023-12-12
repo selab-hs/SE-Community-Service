@@ -54,6 +54,7 @@ jobs:
           host: ${{ secrets.HOST_PROD }}
           username: ec2-user
           key: ${{ secrets.KEY }}
+          envs: GITHUB_SHA
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-service
