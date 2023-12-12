@@ -33,19 +33,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-            
-      # main 설정 파일 생성 및 write
-      - name: Set .yml for main
-        run: |
-          # main 설정 파일 디렉토리로 이동
-          cd ./src/main/resources
-          touch ./application-database.yaml
-          echo "${{ secrets.MAIN_DATABASE_YML }}" >> ./application-database.yml
-        shell: bash
+          
 
       # Gradle build
       - name: Build with Gradle
-        run: ./gradlew bootJar
+        run: ./gradlew -x build
 
       # Spring 어플리케이션 Docker Image 빌드
       - name: Build Docker Image For Spring
@@ -59,7 +51,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST_PROD }}
-          username: ubuntu
+          username: ec2-user
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             sudo docker ps
