@@ -60,4 +60,3 @@ jobs:
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-service
             sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/se-community-service
             sudo docker image prune -f
-
