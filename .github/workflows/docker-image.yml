@@ -53,7 +53,6 @@ jobs:
         with:
           host: ${{ secrets.HOST_PROD }}
           username: ec2-user
-          envs: GITHUB_SHA
           key: ${{ secrets.KEY }}
           script: |
             sudo docker ps
