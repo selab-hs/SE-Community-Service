@@ -1,8 +1,5 @@
-# github repository actions 페이지에 나타날 이름
 name: CI/CD using github actions & docker
 
-# event trigger
-# main이나 develop 브랜치에 push가 되었을 때 실행
 on:
   push:
     branches: [ "main" ]
@@ -25,24 +22,13 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      # gradle caching - 빌드 시간 향상
-      - name: Gradle Caching
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       # gradle build
       - name: Build with Gradle
         run: ./gradlew build -x test
 
       # docker build & push to production
-      - name: Docker build & push to prod
-        run: |
+      - name: Docker build & push
+        run: 
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/se-community-service .
           docker push ${{ secrets.DOCKER_USERNAME }}/se-community-service
@@ -52,11 +38,14 @@ jobs:
         uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.HOST_PROD }}
+          port: 22
           username: ec2-user
           key: ${{ secrets.PRIVATE_KEY }}
           envs: GITHUB_SHA
           script: |
             sudo docker ps
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-service
+            sudo docker stop ${{ secrets.DOCKER_USERNAME }}
+            sudo docker rm ${{ secrets.DOCKER_USERNAME }}
             sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/se-community-service
             sudo docker image prune -f
