@@ -42,7 +42,6 @@ jobs:
 
       # docker build & push to production
       - name: Docker build & push to prod
-        if: contains(github.ref, 'main')
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -f Dockerfile -t ${{ secrets.DOCKER_USERNAME }}/se-community-service .
@@ -51,10 +50,8 @@ jobs:
       ## deploy to production
       - name: Deploy to community
         uses: appleboy/ssh-action@master
-        id: deploy-prod
-        if: contains(github.ref, 'main')
         with:
-          host: ${{ secrets.HOST_PROD }} # EC2 퍼블릭 IPv4 DNS
+          host: ${{ secrets.HOST_PROD }}
           username: ec2-user
           envs: GITHUB_SHA
           key: ${{ secrets.Key }}
