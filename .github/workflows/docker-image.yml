@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build-docker-image:
-    runs-on: ubuntu-latest #ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       # 기본 체크아웃
       - name: Checkout
@@ -46,11 +46,11 @@ jobs:
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
           docker build -t ${{ secrets.DOCKER_USERNAME }}/se-community-image .
           docker push ${{ secrets.DOCKER_USERNAME }}/se-community-image
-
+          
   run-docker-image-on-ec2:
     # build-docker-image (위)과정이 완료되어야 실행됩니다.
     needs: build-docker-image
-    runs-on: self-hosted
+    runs-on: latest
     
     steps:
       # 1. 최신 이미지를 풀받습니다
