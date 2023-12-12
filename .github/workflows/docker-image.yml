@@ -49,7 +49,7 @@ jobs:
 
       ## deploy to production
       - name: Deploy to community
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.5
         with:
           host: ${{ secrets.HOST_PROD }}
           username: ec2-user
