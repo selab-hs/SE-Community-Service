@@ -43,8 +43,8 @@ jobs:
       - name: Build Docker Image For Spring
         run: |
           docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/도커 레파지토리 이름 .
-          docker push ${{ secrets.DOCKER_USERNAME }}/도커 레파지토리 이름
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/se-community-image .
+          docker push ${{ secrets.DOCKER_USERNAME }}/se-community-image
           
       # 서버에서 Docker 이미지 실행
       - name: EC2 Docker Run
@@ -55,6 +55,6 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           script: |
             sudo docker ps
-            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-service
-            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/se-community-service
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-image
+            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/se-community-image
             sudo docker image prune -f
