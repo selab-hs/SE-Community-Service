@@ -47,8 +47,8 @@ jobs:
     - name: Build Docker Image For Spring
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build -t ${{ secrets.DOCKER_USERNAME }}/se-community-image .
-        docker push ${{ secrets.DOCKER_USERNAME }}/se-community-image
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/community .
+        docker push ${{ secrets.DOCKER_USERNAME }}/community
 
     - name: Deploy
       uses: appleboy/ssh-action@master
@@ -59,7 +59,8 @@ jobs:
         envs: GITHUB_SHA
         script: |
           sudo docker ps
-          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-image
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/community
           sudo docker stop server
-          sudo docker run -d --rm --name server -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/se-community-image
+          sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/community
+          docker image prune -f
 
