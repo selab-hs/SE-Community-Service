@@ -62,3 +62,4 @@ jobs:
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-image
           sudo docker stop server
           sudo docker run -d --rm --name server -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/se-community-image
+
