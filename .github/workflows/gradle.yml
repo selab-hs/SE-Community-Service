@@ -21,22 +21,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-    
-      # 1. 최신 이미지를 풀받습니다
-    - name: docker pull
+    - uses: actions/checkout@v3
+    - name: Set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        
+    - name: Build with Gradle
+      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+      with:
+        arguments: build
+              # Spring 어플리케이션 Docker Image 빌드
+    - name: Build Docker Image For Spring
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/se-community-image
-      
-    # 2. 기존의 컨테이너를 중지시킵니다
-    - name: docker stop container
-      run: sudo docker stop $(sudo docker ps -q) 2>/dev/null || true
+        docker build -t ${{ secrets.DOCKER_USERNAME }}/se-community-image .
+        docker push ${{ secrets.DOCKER_USERNAME }}/se-community-image
 
-      # 3. 최신 이미지를 컨테이너화하여 실행시킵니다
-    - name: docker run new container
-      run: sudo docker run --name se-community-image --rm -d -p 8080:8080 ${{ secrets.DOCKERHUB_USERNAME }}/se-community-image
-
-      # 4. 미사용 이미지를 정리합니다
-    - name: delete old docker image
-      run: sudo docker system prune -f
+    - name: Deploy
+      uses: appleboy/ssh-action@master 
+      with:
+        host: ${{ secrets.HOST_PROD }} # EC2 퍼블릭 IPv4 DNS
+        username: ubuntu
+        key: ${{ secrets.PRIVATE_KEY }}
+        envs: GITHUB_SHA
+        script: |
+          sudo docker ps
+          sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-image
+          sudo docker run -d -p 8082:8082 ${{ secrets.DOCKER_USERNAME }}/se-community-image
+          sudo docker image prune -f
