@@ -24,8 +24,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        submodules: true
+        submodules: recursive
+        fetch-depth: 0
         token: ${{ secrets.GIT_TOKEN }}
+
+    - name: Update submodules to latest commit on main branch
+      run: git submodule update --remote
         
     - uses: actions/checkout@v3
     - name: Set up JDK 11
