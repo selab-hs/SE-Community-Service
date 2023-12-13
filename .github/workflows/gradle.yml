@@ -19,7 +19,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+      
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 11
@@ -28,12 +28,22 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
-    - name: Build with Gradle
-      uses: gradle/gradle-build-action@bd5760595778326ba7f1441bcf7e88b49de61a25 # v2.6.0
+    # gradle caching - 빌드 시간 향상
+    - name: Gradle Caching
+      uses: actions/cache@v3
       with:
-        arguments: build
-              # Spring 어플리케이션 Docker Image 빌드
-              
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+          
+    # gradle build
+    - name: Build with Gradle
+      run: ./gradlew build -x test
+    
+    # Spring 어플리케이션 Docker Image 빌드          
     - name: Build Docker Image For Spring
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
@@ -44,9 +54,9 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST_PROD }}
-        port: 22
         username: ec2-user
         key: ${{ secrets.PRIVATE_KEY }}
+        envs: GITHUB_SHA
         script: |
           sudo docker ps
           sudo docker pull ${{ secrets.DOCKER_USERNAME }}/se-community-image
