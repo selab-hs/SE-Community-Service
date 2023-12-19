@@ -66,3 +66,4 @@ jobs:
           sudo docker stop server || true
           sudo docker run -d -p 8080:8080 --name server ${{ secrets.DOCKER_USERNAME }}/community
           docker image prune -f
+
