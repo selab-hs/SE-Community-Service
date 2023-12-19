@@ -39,4 +39,5 @@
 
 ## 프로젝트 개선사항
 - 게시판 DB를 매번 조회에서 로컬 캐싱으로 성능 개선 👉 [click]([https://unequaled-peach-7e5.notion.site/Glass-Bottle-1529ed9b16094e218a4a2f9ec3fb7735?pvs=4](https://github.com/InJun2/TIL/blob/main/Project/se-community/%EC%84%B1%EB%8A%A5%EA%B0%9C%EC%84%A0%ED%94%BC%EB%93%9C%EB%B0%B1.md))  
-- 로그인 Filter 응답 전송 에러 해결 👉 [click]([https://unequaled-peach-7e5.notion.site/Glass-Bottle-1529ed9b16094e218a4a2f9ec3fb7735?pvs=4](https://github.com/InJun2/TIL/blob/main/Project/se-community/%EC%BD%94%EB%93%9C%ED%94%BC%EB%93%9C%EB%B0%B1.md)https://github.com/InJun2/TIL/blob/main/Project/se-community/%EC%BD%94%EB%93%9C%ED%94%BC%EB%93%9C%EB%B0%B1.md)  
+- 로그인 Filter 응답 전송 에러 해결 👉 [click]([https://unequaled-peach-7e5.notion.site/Glass-Bottle-1529ed9b16094e218a4a2f9ec3fb7735?pvs=4](https://github.com/InJun2/TIL/blob/main/Project/se-community/%EC%BD%94%EB%93%9C%ED%94%BC%EB%93%9C%EB%B0%B1.md)https://github.com/InJun2/TIL/blob/main/Project/se-community/%EC%BD%94%EB%93%9C%ED%94%BC%EB%93%9C%EB%B0%B1.md)
+- 자동배포 적용기 👉 [click](https://scopan.tistory.com/5)
