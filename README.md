@@ -8,7 +8,7 @@
 - [SE Community Site](https://se-community.net/boards)
 
 ### 프로젝트 구성도
-![se-community-infra](https://github.com/selab-hs/SE-Community-Service/assets/76032947/8d834d09-8d54-4b58-afd3-11088d58b56a)
+![se-infra](https://github.com/selab-hs/SE-Community-Service/assets/76032947/0bf9304d-316c-4d76-a5df-de9a9c89efb4)
 
 
 
