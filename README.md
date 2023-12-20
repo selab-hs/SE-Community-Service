@@ -8,7 +8,8 @@
 - [SE Community Site](https://se-community.net/boards)
 
 ### 프로젝트 구성도
-![se-community-infra](https://github.com/selab-hs/SE-Community-Service/assets/76032947/3a47ef9b-9abb-466d-ba89-a51ecf03f74b)
+![se-community-infra](https://github.com/selab-hs/SE-Community-Service/assets/76032947/8d834d09-8d54-4b58-afd3-11088d58b56a)
+
 
 
 ### 프로젝트 ERD
