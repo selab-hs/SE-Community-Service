@@ -8,7 +8,8 @@
 - [SE Community Site](https://se-community.net/boards)
 
 ### 프로젝트 구성도
-![Uploading se-infra.png…]()
+![se-infra](https://github.com/selab-hs/SE-Community-Service/assets/76032947/be8bfd70-d2a6-4dc6-be7e-45830a7cac6d)
+
 
 
 
