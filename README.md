@@ -5,7 +5,6 @@
 ## SE-Community-Service Web Application v1.0
 - 개발 참여 인원: 황인준, 황하림
 - 개발 기간: 2023-07-22 ~ 2023-09-11
-- [SE Community Site](https://se-community.net/boards)
 
 ### 프로젝트 구성도
 ![se-infra](https://github.com/selab-hs/SE-Community-Service/assets/76032947/be8bfd70-d2a6-4dc6-be7e-45830a7cac6d)
